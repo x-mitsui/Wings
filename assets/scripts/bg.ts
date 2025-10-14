@@ -3,7 +3,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass("bg")
 export class bg extends Component {
-    @property()
+    @property
     speed = 0;
     bg1: Node = null;
     bg2: Node = null;
