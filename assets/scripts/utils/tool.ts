@@ -8,3 +8,17 @@ export const checkIsIn = (inBox: math.Size, outBox: math.Size, point: math.Vec3)
         point.y < outBox.height - inBox.height / 2
     );
 };
+
+import { _decorator, resources, JsonAsset } from "cc";
+
+export async function loadJSONPromise(path: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        resources.load(path, JsonAsset, (err, jsonAsset) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(jsonAsset.json);
+            }
+        });
+    });
+}
