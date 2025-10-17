@@ -2,8 +2,8 @@ import { _decorator, Component, EventTouch, input, Node, Input, UITransform, mat
 import { Player } from "./Player";
 const { ccclass } = _decorator;
 
-@ccclass("Body")
-export class Body extends Component {
+@ccclass("TouchComp")
+export class TouchComp extends Component {
     // 背景大小
     bgContentSize: math.Size = null;
     // 主角飞机实际大小
@@ -32,22 +32,28 @@ export class Body extends Component {
 
         this.node.setPosition(this.node.position.x + delta.x, this.node.position.y + delta.y);
 
-        if (this.node.position.x < this.realSize.width / 2) {
-            this.node.setPosition(this.realSize.width / 2, this.node.position.y);
-        }
-        if (this.node.position.x > this.bgContentSize.width - this.realSize.width / 2) {
+        if (this.node.position.x < -this.bgContentSize.width / 2 + this.realSize.width / 2) {
             this.node.setPosition(
-                this.bgContentSize.width - this.realSize.width / 2,
+                -this.bgContentSize.width / 2 + this.realSize.width / 2,
                 this.node.position.y
             );
         }
-        if (this.node.position.y < this.realSize.height / 2) {
-            this.node.setPosition(this.node.position.x, this.realSize.height / 2);
+        if (this.node.position.x > this.bgContentSize.width / 2 - this.realSize.width / 2) {
+            this.node.setPosition(
+                this.bgContentSize.width / 2 - this.realSize.width / 2,
+                this.node.position.y
+            );
         }
-        if (this.node.position.y > this.bgContentSize.height - this.realSize.height / 2) {
+        if (this.node.position.y < -this.bgContentSize.height / 2 + this.realSize.height / 2) {
             this.node.setPosition(
                 this.node.position.x,
-                this.bgContentSize.height - this.realSize.height / 2
+                -this.bgContentSize.height / 2 + this.realSize.height / 2
+            );
+        }
+        if (this.node.position.y > this.bgContentSize.height / 2 - this.realSize.height / 2) {
+            this.node.setPosition(
+                this.node.position.x,
+                this.bgContentSize.height / 2 - this.realSize.height / 2
             );
         }
     }

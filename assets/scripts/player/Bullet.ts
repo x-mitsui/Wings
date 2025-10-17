@@ -94,9 +94,9 @@ export class Bullet extends Component {
         cfg.posNodes.forEach((posNode) => {
             const bullet = this.spawn(cfg);
             if (!bullet) error("bullet skin Prefab is null");
-            bullet.setWorldPosition(posNode.worldPosition);
             this.bullets.push(bullet);
             this.bulletContainer.addChild(bullet);
+            bullet.setWorldPosition(posNode.worldPosition);
         });
     }
     getBulletCurrentLvlConfig(): BulletCurrentLvlConfig {

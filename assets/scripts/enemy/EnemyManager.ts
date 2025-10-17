@@ -36,12 +36,10 @@ export class EnemyManager extends Component {
     // 记录每个敌人的type
     nodeTypeDict: Map<Node, number> = new Map();
     onLoad() {
-        this.spawnRates = this.enemyConfigs
-            .map((item) => item.spawnRate)
-            .map((item) => {
-                this.timers.push(0);
-                return item;
-            });
+        this.spawnRates = this.enemyConfigs.map((item) => {
+            this.timers.push(0);
+            return item.spawnRate;
+        });
     }
 
     update(deltaTime: number) {

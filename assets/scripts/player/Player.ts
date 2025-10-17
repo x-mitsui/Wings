@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, UITransform, math, director } from "cc";
 import { Bullet } from "./Bullet";
 import { PlayerLevel } from "../common";
-import { Body } from "./Body";
+import { TouchComp } from "./TouchComp";
 const { ccclass, property } = _decorator;
 
 @ccclass("Player")
@@ -15,7 +15,7 @@ export class Player extends Component {
     start() {
         // this.scheduleOnce(() => {
         this.node.getComponent(Bullet).inject(this.node);
-        this.node.getChildByName("body").getComponent(Body).inject(this.node);
+        this.node.getComponent(TouchComp).inject(this.node);
         // });
     }
 }
