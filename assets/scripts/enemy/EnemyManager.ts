@@ -1,14 +1,4 @@
-import {
-    _decorator,
-    Component,
-    EmptyDevice,
-    instantiate,
-    math,
-    Node,
-    Prefab,
-    UITransform,
-    Vec3
-} from "cc";
+import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyConfig")
@@ -75,15 +65,13 @@ export class EnemyManager extends Component {
     updateEnemiesPositions(deltaTime: number) {
         this.node.children.forEach((enemyNode) => {
             const enemyConfig = this.enemyConfigs[this.nodeTypeDict.get(enemyNode)];
-            if (!enemyConfig) {
-                return;
-            }
+            if (!enemyConfig) return;
+
             enemyNode.position = enemyNode.position.add3f(0, enemyConfig.speed * deltaTime, 0);
 
             const contentSize = enemyNode.getComponent(UITransform).contentSize;
-            if (enemyNode.position.y < -contentSize.height / 2) {
-                enemyNode.destroy();
-            }
+
+            if (enemyNode.position.y < -contentSize.height / 2) enemyNode.destroy();
         });
     }
 }

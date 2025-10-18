@@ -1,5 +1,15 @@
 import { Node } from "cc";
-import { BulletDirection, PlayerLevel } from "../common";
+
+export enum PlayerLevel {
+    Lvl1 = "Lvl1",
+    Lvl2 = "Lvl2"
+}
+
+export enum BulletDirection {
+    UP = "UP",
+    DOWN = "DOWN",
+    OTHER = "OTHER"
+}
 
 export type BulletConfig = {
     player: Record<

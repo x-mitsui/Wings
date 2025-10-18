@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, UITransform, math, director } from "cc";
 import { Bullet } from "./Bullet";
-import { PlayerLevel } from "../common";
 import { TouchComp } from "./TouchComp";
+import { PlayerLevel } from "../types/Bullet";
 const { ccclass, property } = _decorator;
 
 @ccclass("Player")

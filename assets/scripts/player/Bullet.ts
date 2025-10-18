@@ -10,10 +10,14 @@ import {
     UITransform,
     Vec3
 } from "cc";
-import { BulletDirection, PlayerLevel } from "../common";
 import { loadJSONPromise } from "../utils/tool";
 import { Player } from "./Player";
-import { BulletConfig, BulletCurrentLvlConfig } from "../types/BulletConfig";
+import {
+    BulletConfig,
+    BulletCurrentLvlConfig,
+    BulletDirection,
+    PlayerLevel
+} from "../types/Bullet";
 const { ccclass, property } = _decorator;
 
 /**
