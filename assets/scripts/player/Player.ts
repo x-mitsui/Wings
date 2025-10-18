@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, UITransform, math, director } from "cc";
+import { _decorator, Component, Node } from "cc";
 import { Bullet } from "./Bullet";
 import { TouchComp } from "./TouchComp";
 import { PlayerLevel } from "../types/Bullet";

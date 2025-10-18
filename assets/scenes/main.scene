@@ -1098,6 +1098,7 @@
   {
     "__type__": "EnemyConfig",
     "type": 0,
+    "hp": 1,
     "spawnRate": 1,
     "speed": -300,
     "prefab": {
@@ -1108,6 +1109,7 @@
   {
     "__type__": "EnemyConfig",
     "type": 1,
+    "hp": 2,
     "spawnRate": 3,
     "speed": -200,
     "prefab": {
@@ -1118,6 +1120,7 @@
   {
     "__type__": "EnemyConfig",
     "type": 2,
+    "hp": 5,
     "spawnRate": 5,
     "speed": -100,
     "prefab": {

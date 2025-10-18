@@ -1,16 +1,21 @@
 import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
+import { EnemyStats } from "./EnemyStats";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyConfig")
 class EnemyConfig {
-    @property
-    type = 0;
-    @property
+    @property({
+        displayName: "生产频率（单位秒）"
+    })
     spawnRate = 1;
-    @property
-    speed = 300;
     @property(Prefab)
     prefab: Prefab = null;
+}
+
+class EnemyConfigEx extends EnemyConfig {
+    kind = 0;
+    hp = 1;
+    speed = -300;
 }
 @ccclass("EnemyManager")
 export class EnemyManager extends Component {
@@ -23,8 +28,8 @@ export class EnemyManager extends Component {
     timers = [];
     // 记录每个敌人的spawn出生频率
     spawnRates = [];
-    // 记录每个敌人的type
-    nodeTypeDict: Map<Node, number> = new Map();
+    // 记录每个敌人的状态
+    nodeConfigExsDict: Map<Node, EnemyConfigEx> = new Map();
     onLoad() {
         this.spawnRates = this.enemyConfigs.map((item) => {
             this.timers.push(0);
@@ -45,7 +50,8 @@ export class EnemyManager extends Component {
 
     spawnEnemy(enemyConfig: EnemyConfig) {
         const enemyNode = instantiate(enemyConfig.prefab);
-        this.nodeTypeDict.set(enemyNode, enemyConfig.type);
+        const enemyStat = enemyNode.getComponent(EnemyStats);
+        this.nodeConfigExsDict.set(enemyNode, { ...enemyConfig, ...enemyStat });
         enemyNode.parent = this.node;
         enemyNode.setPosition(this.getSpawnPos(enemyNode));
         return enemyNode;
@@ -64,10 +70,10 @@ export class EnemyManager extends Component {
 
     updateEnemiesPositions(deltaTime: number) {
         this.node.children.forEach((enemyNode) => {
-            const enemyConfig = this.enemyConfigs[this.nodeTypeDict.get(enemyNode)];
-            if (!enemyConfig) return;
+            const enemyConfigEx = this.nodeConfigExsDict.get(enemyNode);
+            if (!enemyConfigEx) return;
 
-            enemyNode.position = enemyNode.position.add3f(0, enemyConfig.speed * deltaTime, 0);
+            enemyNode.position = enemyNode.position.add3f(0, enemyConfigEx.speed * deltaTime, 0);
 
             const contentSize = enemyNode.getComponent(UITransform).contentSize;
 
