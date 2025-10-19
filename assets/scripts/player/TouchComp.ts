@@ -30,7 +30,7 @@ export class TouchComp extends Component {
         console.log("touch move");
         const delta = event.getDelta();
 
-        this.node.setPosition(this.node.position.x + delta.x, this.node.position.y + delta.y);
+        this.node.setPosition(this.node.position.add3f(delta.x, delta.y, 0));
 
         if (this.node.position.x < -this.bgContentSize.width / 2 + this.realSize.width / 2) {
             this.node.setPosition(

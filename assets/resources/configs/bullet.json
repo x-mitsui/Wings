@@ -1,14 +1,14 @@
 {
     "player": {
-        "Lvl1": {
+        "Lvl0": {
             "direction": "UP",
-            "posNodeNames": ["Player_Lv1_Bullet_Pos_1"],
+            "posNodeNames": ["Player_Lv0_Bullet_Pos_0"],
             "speed": 1500,
             "skinSpriteFrameID": 0
         },
-        "Lvl2": {
+        "Lvl1": {
             "direction": "UP",
-            "posNodeNames": ["Player_Lv2_Bullet_Pos_1", "Player_Lv2_Bullet_Pos_2"],
+            "posNodeNames": ["Player_Lv1_Bullet_Pos_0", "Player_Lv1_Bullet_Pos_1"],
             "speed": 1200,
             "skinSpriteFrameID": 1
         }

@@ -185,7 +185,7 @@
       "__id__": 9
     },
     "enabledContactListener": true,
-    "bullet": false,
+    "bullet": true,
     "awakeOnLoad": true,
     "_group": 1,
     "_type": 1,
@@ -207,7 +207,7 @@
     "fileId": "0a1G0/PTpLUr+Jz7ch/5Kf"
   },
   {
-    "__type__": "ae90cUG+5NIZ6I9OlgFcgkA",
+    "__type__": "09842gJNOhBwLiuAOvbagL2",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -222,7 +222,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "8dPO+w+t5D94s2kN3HWA49"
+    "fileId": "98nLhHzhJGB6GYa2+TEjQu"
   },
   {
     "__type__": "cc.PrefabInfo",

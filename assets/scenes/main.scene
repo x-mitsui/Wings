@@ -273,7 +273,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bg1",
+    "_name": "bg0",
     "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
@@ -382,7 +382,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "bg2",
+    "_name": "bg1",
     "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
@@ -645,7 +645,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Player_Lv1_Bullet_Pos_1",
+    "_name": "Player_Lv0_Bullet_Pos_0",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -686,7 +686,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Player_Lv2_Bullet_Pos_1",
+    "_name": "Player_Lv1_Bullet_Pos_0",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -727,7 +727,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Player_Lv2_Bullet_Pos_2",
+    "_name": "Player_Lv1_Bullet_Pos_1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1097,10 +1097,7 @@
   },
   {
     "__type__": "EnemyConfig",
-    "type": 0,
-    "hp": 1,
     "spawnRate": 1,
-    "speed": -300,
     "prefab": {
       "__uuid__": "cfa51c59-f521-4335-9bac-ed81d489925e",
       "__expectedType__": "cc.Prefab"
@@ -1108,10 +1105,7 @@
   },
   {
     "__type__": "EnemyConfig",
-    "type": 1,
-    "hp": 2,
     "spawnRate": 3,
-    "speed": -200,
     "prefab": {
       "__uuid__": "a9b04b33-16b9-417e-a24a-5840860371f5",
       "__expectedType__": "cc.Prefab"
@@ -1119,10 +1113,7 @@
   },
   {
     "__type__": "EnemyConfig",
-    "type": 2,
-    "hp": 5,
     "spawnRate": 5,
-    "speed": -100,
     "prefab": {
       "__uuid__": "c90e0a22-d900-468c-8d96-35ae52959474",
       "__expectedType__": "cc.Prefab"

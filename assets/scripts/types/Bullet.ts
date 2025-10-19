@@ -1,8 +1,8 @@
 import { Node } from "cc";
 
 export enum PlayerLevel {
-    Lvl1 = "Lvl1",
-    Lvl2 = "Lvl2"
+    Lvl0 = "Lvl0",
+    Lvl1 = "Lvl1"
 }
 
 export enum BulletDirection {

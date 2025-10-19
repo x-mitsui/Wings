@@ -25,8 +25,8 @@ const { ccclass, property } = _decorator;
  * 1. 装载 -- spawn
  * 2. 发射 -- fire
  */
-@ccclass("Bullet")
-export class Bullet extends Component {
+@ccclass("BulletManager")
+export class BulletManager extends Component {
     /** NOTE: 一级属性， */
     // 子弹预制体
     @property({ type: Prefab })
@@ -114,25 +114,16 @@ export class Bullet extends Component {
         return this.bulletCurLvlConfig;
     }
 
-    // changeBulletsConfig(
-    //     type: PlayerLevel = PlayerLevel.Lvl1,
-    //     worldPosArr: Vec3[],
-    //     direction: BulletDirection = BulletDirection.UP,
-    //     bgHeight: number = 1280
-    // ) {
-    //     this.playerLevel = type;
-    //     this.bgHeight = bgHeight;
-    // }
-
     updatePositions(deltaTime: number) {
         const cfg = this.bulletCurLvlConfig;
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
-            bullet.position = bullet.position.add3f(
-                0,
-                (cfg.direction === BulletDirection.UP ? cfg.speed : -cfg.speed) * deltaTime,
-                0
-            );
+            if (!bullet.isValid) {
+                this.bullets.splice(i, 1);
+                continue;
+            }
+            const y = (cfg.direction === BulletDirection.UP ? cfg.speed : -cfg.speed) * deltaTime;
+            bullet.position = bullet.position.add3f(0, y, 0);
             const wPosY = bullet.worldPosition.y;
             if (
                 wPosY > this.bgHeight + bullet.getComponent(UITransform).height / 2 ||

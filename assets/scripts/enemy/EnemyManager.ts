@@ -1,5 +1,5 @@
 import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
-import { EnemyStats } from "./EnemyStats";
+import { EnemyState } from "./EnemyState";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyConfig")
@@ -28,8 +28,6 @@ export class EnemyManager extends Component {
     timers = [];
     // 记录每个敌人的spawn出生频率
     spawnRates = [];
-    // 记录每个敌人的状态
-    nodeConfigExsDict: Map<Node, EnemyConfigEx> = new Map();
     onLoad() {
         this.spawnRates = this.enemyConfigs.map((item) => {
             this.timers.push(0);
@@ -50,8 +48,6 @@ export class EnemyManager extends Component {
 
     spawnEnemy(enemyConfig: EnemyConfig) {
         const enemyNode = instantiate(enemyConfig.prefab);
-        const enemyStat = enemyNode.getComponent(EnemyStats);
-        this.nodeConfigExsDict.set(enemyNode, { ...enemyConfig, ...enemyStat });
         enemyNode.parent = this.node;
         enemyNode.setPosition(this.getSpawnPos(enemyNode));
         return enemyNode;
@@ -64,16 +60,15 @@ export class EnemyManager extends Component {
             contentSize.width / 2,
             bgSize.width - contentSize.width / 2
         );
-        const enemyPosY = bgSize.height + contentSize.height;
+        const enemyPosY = bgSize.height + contentSize.height / 2;
         return new Vec3(enemyPosX, enemyPosY, 0);
     }
 
     updateEnemiesPositions(deltaTime: number) {
         this.node.children.forEach((enemyNode) => {
-            const enemyConfigEx = this.nodeConfigExsDict.get(enemyNode);
-            if (!enemyConfigEx) return;
+            const enemyState = enemyNode.getComponent(EnemyState);
 
-            enemyNode.position = enemyNode.position.add3f(0, enemyConfigEx.speed * deltaTime, 0);
+            enemyNode.position = enemyNode.position.add3f(0, enemyState.speed * deltaTime, 0);
 
             const contentSize = enemyNode.getComponent(UITransform).contentSize;
 
