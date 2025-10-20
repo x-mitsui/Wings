@@ -1,5 +1,5 @@
 import { _decorator, Component, EventTouch, input, Node, Input, UITransform, math } from "cc";
-import { Player } from "./Player";
+import { PlayerState } from "./PlayerState";
 const { ccclass } = _decorator;
 
 @ccclass("TouchComp")
@@ -9,7 +9,9 @@ export class TouchComp extends Component {
     // 主角飞机实际大小
     realSize: math.Size = null;
     inject(player: Node) {
-        this.bgContentSize = player.getComponent(Player).bg.getComponent(UITransform).contentSize;
+        this.bgContentSize = player
+            .getComponent(PlayerState)
+            .bg.getComponent(UITransform).contentSize;
     }
     protected onLoad(): void {
         const contentSize = this.node.getComponent(UITransform).contentSize;

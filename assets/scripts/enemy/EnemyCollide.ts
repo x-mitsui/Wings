@@ -1,16 +1,7 @@
-import {
-    _decorator,
-    Animation,
-    AnimationState,
-    Collider2D,
-    Component,
-    Contact2DType,
-    Node,
-    RigidBody2D
-} from "cc";
-import { Enemy } from "./Enemy";
+import { _decorator, Animation, AnimationState, Collider2D, Component, Contact2DType } from "cc";
 import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
-const { ccclass, property } = _decorator;
+import { EnemyState } from "./EnemyState";
+const { ccclass } = _decorator;
 
 @ccclass("EnemyCollide")
 export class EnemyCollide extends Component {
@@ -43,7 +34,7 @@ export class EnemyCollide extends Component {
         console.log("onBeginContact:", enemyName);
         if (!enemyName.includes("enemy")) return;
 
-        const enemyState = enemyNode.getComponent(Enemy);
+        const enemyState = enemyNode.getComponent(EnemyState);
         this.scheduleOnce(() => {
             bulletNode.destroy();
 

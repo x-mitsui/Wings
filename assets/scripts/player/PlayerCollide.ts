@@ -7,8 +7,9 @@ import {
     director,
     IPhysics2DContact
 } from "cc";
-import { Player } from "./Player";
-const { ccclass, property } = _decorator;
+import { PlayerState } from "./PlayerState";
+import { EnemyState } from "../enemy/EnemyState";
+const { ccclass } = _decorator;
 
 @ccclass("PlayerCollide")
 export class PlayerCollide extends Component {
@@ -27,18 +28,19 @@ export class PlayerCollide extends Component {
         contact: IPhysics2DContact
     ) {
         const player = selfCollider.node;
-        const playerComp = player.getComponent(Player);
+        const playerState = player.getComponent(PlayerState);
         const playerAnimation = player.getComponent(Animation);
         const enemy = otherCollider.node;
-        console.log("enemy collide player111", !enemy || !enemy.isValid);
-        if (!player || !player.isValid || !enemy || !enemy.isValid || playerComp.isHitten) return;
-        playerComp.isHitten = true;
+        const enemyState = enemy.getComponent(EnemyState);
+        if (!player || !player.isValid || !enemy || !enemy.isValid || playerState.isHitten) return;
+        playerState.isHitten = true;
 
         if (!enemy.name.includes("enemy")) return;
-        console.log("enemy collide player");
+
         this.scheduleOnce(() => {
-            playerComp.hp -= 1;
-            if (playerComp.hp <= 0) {
+            playerState.hp -= 1;
+
+            if (playerState.hp <= 0) {
                 playerAnimation.on(
                     Animation.EventType.FINISHED,
                     this.playerDownCallback.bind(this)
@@ -51,11 +53,17 @@ export class PlayerCollide extends Component {
                 );
                 playerAnimation.play("player_hit");
             }
+
+            enemyState.hp--;
+            if (enemyState.hp <= 0) {
+                enemy.destroy();
+            }
         }, 0);
     }
 
     playerHittenCallback() {
-        this.node.getComponent(Player).isHitten = false;
+        this.node.getComponent(PlayerState).isHitten = false;
+        this.node.getComponent(Animation).play("player_idle");
     }
 
     playerDownCallback() {

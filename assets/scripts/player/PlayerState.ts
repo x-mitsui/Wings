@@ -4,8 +4,8 @@ import { PlayerLevel } from "./bullet/types";
 import { PlayerBulletManager } from "./bullet/PlayerBulletManager";
 const { ccclass, property } = _decorator;
 
-@ccclass("Player")
-export class Player extends Component {
+@ccclass("PlayerState")
+export class PlayerState extends Component {
     @property(Node)
     body: Node = null;
     @property(Node)

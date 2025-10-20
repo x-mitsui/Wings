@@ -11,7 +11,7 @@ import {
 } from "cc";
 import { loadJSONPromise } from "../../utils/tool";
 import { BulletConfig, BulletCurrentLvlConfig, BulletDirection, PlayerLevel } from "./types";
-import { Player } from "../Player";
+import { PlayerState } from "../PlayerState";
 const { ccclass, property } = _decorator;
 
 /**
@@ -63,7 +63,7 @@ export class PlayerBulletManager extends Component {
         this.player = player;
         const children = player.children;
         children.forEach((child) => this.posNodes.set(child.name, child));
-        this.bgHeight = player.getComponent(Player).bg.getComponent(UITransform).height;
+        this.bgHeight = player.getComponent(PlayerState).bg.getComponent(UITransform).height;
     }
     start() {}
 
@@ -98,7 +98,7 @@ export class PlayerBulletManager extends Component {
         });
     }
     getBulletCurrentLvlConfig(): BulletCurrentLvlConfig {
-        const playerLvl = this.player.getComponent(Player).level;
+        const playerLvl = this.player.getComponent(PlayerState).level;
         if (this.playerLvl === playerLvl && this.bulletCurLvlConfig) return this.bulletCurLvlConfig;
         const rawCfg = this.bulletPlayerConfig[playerLvl];
         this.bulletCurLvlConfig = {
