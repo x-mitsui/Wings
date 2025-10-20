@@ -31,26 +31,29 @@ export class EnemyCollide extends Component {
         bulletState.isHitten = true; // 防止一次碰撞多次触发onBeginContact的情况
 
         const enemyName = enemyNode.name;
-        console.log("onBeginContact:", enemyName);
+        console.log("EnemyCollide onBeginContact:", enemyName);
         if (!enemyName.includes("enemy")) return;
 
-        const enemyState = enemyNode.getComponent(EnemyState);
         this.scheduleOnce(() => {
             bulletNode.destroy();
-
-            enemyState.hp--;
-            if (enemyState.hp > 0) {
-                this.playHitAc();
-            } else {
-                this.playDownAc();
-            }
+            this.takeDamageLogic(1);
         }, 0);
     }
 
     protected onDestroy(): void {
         if (this.collider) {
             this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
-            // collider.off(Contact2DType.END_CONTACT, this.onEndContact, this);
+        }
+    }
+
+    // 执行掉血逻辑
+    takeDamageLogic(hp: number) {
+        const state = this.node.getComponent(EnemyState);
+        state.hp -= hp;
+        if (state.hp > 0) {
+            this.playHitAc();
+        } else {
+            this.playDownAc();
         }
     }
 

@@ -1,6 +1,7 @@
 import {
     _decorator,
     Animation,
+    AnimationState,
     Collider2D,
     Component,
     Contact2DType,
@@ -9,6 +10,7 @@ import {
 } from "cc";
 import { PlayerState } from "./PlayerState";
 import { EnemyState } from "../enemy/EnemyState";
+import { EnemyCollide } from "../enemy/EnemyCollide";
 const { ccclass } = _decorator;
 
 @ccclass("PlayerCollide")
@@ -29,36 +31,38 @@ export class PlayerCollide extends Component {
     ) {
         const player = selfCollider.node;
         const playerState = player.getComponent(PlayerState);
-        const playerAnimation = player.getComponent(Animation);
         const enemy = otherCollider.node;
-        const enemyState = enemy.getComponent(EnemyState);
+        const enemyCollide = enemy.getComponent(EnemyCollide);
         if (!player || !player.isValid || !enemy || !enemy.isValid || playerState.isHitten) return;
         playerState.isHitten = true;
 
         if (!enemy.name.includes("enemy")) return;
 
         this.scheduleOnce(() => {
-            playerState.hp -= 1;
+            this.takeDamageLogic(1);
 
-            if (playerState.hp <= 0) {
-                playerAnimation.on(
-                    Animation.EventType.FINISHED,
-                    this.playerDownCallback.bind(this)
-                );
-                playerAnimation.play("player_down");
-            } else {
-                playerAnimation.on(
-                    Animation.EventType.FINISHED,
-                    this.playerHittenCallback.bind(this)
-                );
-                playerAnimation.play("player_hit");
-            }
-
-            enemyState.hp--;
-            if (enemyState.hp <= 0) {
-                enemy.destroy();
-            }
+            enemyCollide.takeDamageLogic(1);
         }, 0);
+    }
+
+    // 执行掉血逻辑
+    takeDamageLogic(hp: number) {
+        const state = this.node.getComponent(PlayerState);
+        state.hp -= hp;
+        if (state.hp > 0) {
+            this.playHitAc();
+        } else {
+            this.playDownAc();
+        }
+    }
+
+    playHitAc() {
+        const animation = this.node.getComponent(Animation);
+        let acName = this.node.name + "_hit";
+        animation.play(acName);
+
+        animation.on(Animation.EventType.FINISHED, this.playerHittenCallback.bind(this));
+        animation.play("player_hit");
     }
 
     playerHittenCallback() {
@@ -66,9 +70,21 @@ export class PlayerCollide extends Component {
         this.node.getComponent(Animation).play("player_idle");
     }
 
-    playerDownCallback() {
-        console.log("game over");
-        director.pause();
+    playDownAc() {
+        const animation = this.node.getComponent(Animation);
+        this.node.getComponent(Collider2D).enabled = false; // 立即禁用，以免在播放动画时干扰
+
+        const acName = this.node.name + "_down";
+
+        animation.on(Animation.EventType.FINISHED, this.playDownAcCallback.bind(this));
+        animation.play(acName);
+    }
+
+    playDownAcCallback(type: Animation.EventType, state: AnimationState) {
+        if (state.name === this.node.name + "_down") {
+            console.log("game over");
+            director.pause();
+        }
     }
 
     protected onDestroy(): void {
