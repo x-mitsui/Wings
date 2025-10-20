@@ -30,30 +30,26 @@ export class TouchComp extends Component {
         console.log("touch move");
         const delta = event.getDelta();
 
-        this.node.setPosition(this.node.position.add3f(delta.x, delta.y, 0));
+        this.node.setWorldPosition(this.node.worldPosition.add3f(delta.x, delta.y, 0));
 
-        if (this.node.position.x < -this.bgContentSize.width / 2 + this.realSize.width / 2) {
-            this.node.setPosition(
-                -this.bgContentSize.width / 2 + this.realSize.width / 2,
-                this.node.position.y
+        if (this.node.worldPosition.x < this.realSize.width / 2) {
+            this.node.setWorldPosition(this.realSize.width / 2, this.node.worldPosition.y, 0);
+        }
+        if (this.node.worldPosition.x > this.bgContentSize.width - this.realSize.width / 2) {
+            this.node.setWorldPosition(
+                this.bgContentSize.width - this.realSize.width / 2,
+                this.node.worldPosition.y,
+                0
             );
         }
-        if (this.node.position.x > this.bgContentSize.width / 2 - this.realSize.width / 2) {
-            this.node.setPosition(
-                this.bgContentSize.width / 2 - this.realSize.width / 2,
-                this.node.position.y
-            );
+        if (this.node.worldPosition.y < this.realSize.height / 2) {
+            this.node.setWorldPosition(this.node.worldPosition.x, this.realSize.height / 2, 0);
         }
-        if (this.node.position.y < -this.bgContentSize.height / 2 + this.realSize.height / 2) {
-            this.node.setPosition(
-                this.node.position.x,
-                -this.bgContentSize.height / 2 + this.realSize.height / 2
-            );
-        }
-        if (this.node.position.y > this.bgContentSize.height / 2 - this.realSize.height / 2) {
-            this.node.setPosition(
-                this.node.position.x,
-                this.bgContentSize.height / 2 - this.realSize.height / 2
+        if (this.node.worldPosition.y > this.bgContentSize.height - this.realSize.height / 2) {
+            this.node.setWorldPosition(
+                this.node.worldPosition.x,
+                this.bgContentSize.height - this.realSize.height / 2,
+                0
             );
         }
     }

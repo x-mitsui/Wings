@@ -8,8 +8,8 @@ import {
     Node,
     RigidBody2D
 } from "cc";
-import { EnemyState } from "./EnemyState";
-import { BulletState } from "../player/BulletState";
+import { Enemy } from "./Enemy";
+import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyCollide")
@@ -35,7 +35,7 @@ export class EnemyCollide extends Component {
         const enemyNode = selfCollider.node;
         const bulletNode = otherCollider.node;
 
-        const bulletState = bulletNode.getComponent(BulletState);
+        const bulletState = bulletNode.getComponent(PlayerBulletState);
         if (!bulletNode || !bulletNode.isValid || !bulletState || bulletState.isHitten) return;
         bulletState.isHitten = true; // 防止一次碰撞多次触发onBeginContact的情况
 
@@ -43,7 +43,7 @@ export class EnemyCollide extends Component {
         console.log("onBeginContact:", enemyName);
         if (!enemyName.includes("enemy")) return;
 
-        const enemyState = enemyNode.getComponent(EnemyState);
+        const enemyState = enemyNode.getComponent(Enemy);
         this.scheduleOnce(() => {
             bulletNode.destroy();
 

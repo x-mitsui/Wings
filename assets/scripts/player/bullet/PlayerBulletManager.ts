@@ -7,17 +7,11 @@ import {
     Prefab,
     Sprite,
     SpriteFrame,
-    UITransform,
-    Vec3
+    UITransform
 } from "cc";
-import { loadJSONPromise } from "../utils/tool";
-import { Player } from "./Player";
-import {
-    BulletConfig,
-    BulletCurrentLvlConfig,
-    BulletDirection,
-    PlayerLevel
-} from "../types/Bullet";
+import { loadJSONPromise } from "../../utils/tool";
+import { BulletConfig, BulletCurrentLvlConfig, BulletDirection, PlayerLevel } from "./types";
+import { Player } from "../Player";
 const { ccclass, property } = _decorator;
 
 /**
@@ -25,8 +19,8 @@ const { ccclass, property } = _decorator;
  * 1. 装载 -- spawn
  * 2. 发射 -- fire
  */
-@ccclass("BulletManager")
-export class BulletManager extends Component {
+@ccclass("PlayerBulletManager")
+export class PlayerBulletManager extends Component {
     /** NOTE: 一级属性， */
     // 子弹预制体
     @property({ type: Prefab })
@@ -67,7 +61,7 @@ export class BulletManager extends Component {
     // 注入player属性
     inject(player: Node) {
         this.player = player;
-        const children = player.getChildByName("body").children;
+        const children = player.children;
         children.forEach((child) => this.posNodes.set(child.name, child));
         this.bgHeight = player.getComponent(Player).bg.getComponent(UITransform).height;
     }

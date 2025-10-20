@@ -1,5 +1,5 @@
 import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
-import { EnemyState } from "./EnemyState";
+import { Enemy } from "./Enemy";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyConfig")
@@ -66,7 +66,7 @@ export class EnemyManager extends Component {
 
     updateEnemiesPositions(deltaTime: number) {
         this.node.children.forEach((enemyNode) => {
-            const enemyState = enemyNode.getComponent(EnemyState);
+            const enemyState = enemyNode.getComponent(Enemy);
 
             enemyNode.position = enemyNode.position.add3f(0, enemyState.speed * deltaTime, 0);
 

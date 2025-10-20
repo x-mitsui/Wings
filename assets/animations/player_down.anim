@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.AnimationClip",
-    "_name": "player",
+    "_name": "player_down",
     "_objFlags": 0,
     "__editorExtras__": {
       "embeddedPlayerGroups": []
@@ -9,9 +9,9 @@
     "_native": "",
     "sample": 60,
     "speed": 1,
-    "wrapMode": 2,
+    "wrapMode": 1,
     "enableTrsBlending": false,
-    "_duration": 0.6833333333333333,
+    "_duration": 0.6666666666666666,
     "_hash": 500763545,
     "_tracks": [
       {
@@ -62,20 +62,27 @@
     "__type__": "cc.ObjectCurve",
     "_times": [
       0,
-      0.3333333333333333,
-      0.6666666666666666
+      0.15,
+      0.31666666666666665,
+      0.48333333333333334,
+      0.65
     ],
     "_values": [
+      null,
       {
-        "__uuid__": "97646ed4-79ef-4eda-bb56-f676d49a0023@f9941",
+        "__uuid__": "137c80b6-ee7d-4fbd-bfb7-f8b834d57aea@f9941",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "a7292bbf-92a8-4371-b70e-0c68395fb25e@f9941",
+        "__uuid__": "646f8d58-c9af-475c-b62d-8d111528e330@f9941",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "97646ed4-79ef-4eda-bb56-f676d49a0023@f9941",
+        "__uuid__": "b45eb5d0-ab52-4113-9806-31ceb3d2dd99@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "f52cc070-083b-4ca5-9184-12a4cfe8db22@f9941",
         "__expectedType__": "cc.SpriteFrame"
       }
     ]

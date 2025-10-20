@@ -2,12 +2,12 @@
   "ver": "2.0.3",
   "importer": "animation-clip",
   "imported": true,
-  "uuid": "3befb1ef-1a4f-4975-985b-aff4cb3d99f8",
+  "uuid": "a8e6ce8a-96b0-4024-91c3-0240f10e8935",
   "files": [
     ".cconb"
   ],
   "subMetas": {},
   "userData": {
-    "name": "player"
+    "name": "player_down"
   }
 }

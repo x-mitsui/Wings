@@ -1,7 +1,7 @@
 import { _decorator, Component } from "cc";
 const { ccclass } = _decorator;
 
-@ccclass("BulletState")
-export class BulletState extends Component {
+@ccclass("PlayerBulletState")
+export class PlayerBulletState extends Component {
     isHitten = false;
 }

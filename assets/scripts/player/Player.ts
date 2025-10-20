@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from "cc";
 import { TouchComp } from "./TouchComp";
-import { PlayerLevel } from "../types/Bullet";
-import { BulletManager } from "./BulletManager";
+import { PlayerLevel } from "./bullet/types";
+import { PlayerBulletManager } from "./bullet/PlayerBulletManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("Player")
@@ -10,10 +10,15 @@ export class Player extends Component {
     body: Node = null;
     @property(Node)
     bg: Node = null; // 背景节点
+    @property(Node)
+    playerBulletContainer: Node = null;
+
     level: PlayerLevel = PlayerLevel.Lvl0;
+    hp = 3;
+    isHitten = false;
 
     start() {
-        this.node.getComponent(BulletManager).inject(this.node);
+        this.playerBulletContainer.getComponent(PlayerBulletManager).inject(this.node);
         this.node.getComponent(TouchComp).inject(this.node);
     }
 }
