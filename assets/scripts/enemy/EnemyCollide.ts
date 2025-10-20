@@ -39,22 +39,12 @@ export class EnemyCollide extends Component {
             bulletNode.destroy();
 
             enemyState.hp--;
-            const animation = enemyNode.getComponent(Animation);
-            let acName = "";
             if (enemyState.hp > 0) {
-                acName = enemyNode.name + "_hit";
+                this.playHitAc();
             } else {
-                enemyState.speed = 0;
-                enemyNode.getComponent(Collider2D).enabled = false; // 立即禁用，以免在播放动画时干扰
-
-                acName = enemyNode.name + "_down";
-                animation.on(Animation.EventType.FINISHED, this.playDownAcCallback.bind(this));
+                this.playDownAc();
             }
-            animation.play(acName);
         }, 0);
-    }
-    playDownAcCallback(type: Animation.EventType, state: AnimationState) {
-        if (state.name === this.node.name + "_down") this.node.destroy();
     }
 
     protected onDestroy(): void {
@@ -62,5 +52,27 @@ export class EnemyCollide extends Component {
             this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
             // collider.off(Contact2DType.END_CONTACT, this.onEndContact, this);
         }
+    }
+
+    playHitAc() {
+        const animation = this.node.getComponent(Animation);
+        let acName = this.node.name + "_hit";
+        animation.play(acName);
+    }
+
+    playDownAc() {
+        const animation = this.node.getComponent(Animation);
+        const state = this.node.getComponent(EnemyState);
+        state.speed = 0;
+        this.node.getComponent(Collider2D).enabled = false; // 立即禁用，以免在播放动画时干扰
+
+        const acName = this.node.name + "_down";
+
+        animation.on(Animation.EventType.FINISHED, this.playDownAcCallback.bind(this));
+        animation.play(acName);
+    }
+
+    playDownAcCallback(type: Animation.EventType, state: AnimationState) {
+        if (state.name === this.node.name + "_down") this.node.destroy();
     }
 }
