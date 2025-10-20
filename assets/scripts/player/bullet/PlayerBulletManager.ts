@@ -2,6 +2,7 @@ import {
     _decorator,
     Component,
     error,
+    find,
     instantiate,
     Node,
     Prefab,
@@ -12,6 +13,7 @@ import {
 import { loadJSONPromise } from "../../utils/tool";
 import { BulletConfig, BulletCurrentLvlConfig, BulletDirection, PlayerLevel } from "./types";
 import { PlayerState } from "../PlayerState";
+import { GameManager } from "../../utils/GameManager";
 const { ccclass, property } = _decorator;
 
 /**
@@ -39,8 +41,6 @@ export class PlayerBulletManager extends Component {
     player: Node = null;
 
     /** NOTE: 三级属性， */
-    // bg高度
-    bgHeight = 0;
     // 主角等级
     playerLvl = PlayerLevel.Lvl1;
     // 位置节点
@@ -63,9 +63,7 @@ export class PlayerBulletManager extends Component {
         this.player = player;
         const children = player.children;
         children.forEach((child) => this.posNodes.set(child.name, child));
-        this.bgHeight = player.getComponent(PlayerState).bg.getComponent(UITransform).height;
     }
-    start() {}
 
     update(deltaTime: number) {
         if (!this.bulletPlayerConfig) return;
@@ -109,6 +107,7 @@ export class PlayerBulletManager extends Component {
     }
 
     updatePositions(deltaTime: number) {
+        const gameMgr = GameManager.getInstance();
         const cfg = this.bulletCurLvlConfig;
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
@@ -120,8 +119,8 @@ export class PlayerBulletManager extends Component {
             bullet.position = bullet.position.add3f(0, y, 0);
             const wPosY = bullet.worldPosition.y;
             if (
-                wPosY > this.bgHeight + bullet.getComponent(UITransform).height / 2 ||
-                wPosY < -bullet.getComponent(UITransform).height / 2
+                wPosY > gameMgr.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
+                wPosY < gameMgr.bgBottomBorder - bullet.getComponent(UITransform).height / 2
             ) {
                 this.bullets.splice(i, 1);
                 bullet.destroy();

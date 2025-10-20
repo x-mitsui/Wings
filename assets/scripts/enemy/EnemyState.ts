@@ -1,12 +1,6 @@
 import { _decorator, Component } from "cc";
+import { EntityState } from "../utils/EntityState";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyState")
-export class EnemyState extends Component {
-    @property
-    kind = 0;
-    @property
-    hp = 1;
-    @property
-    speed = 300;
-}
+export class EnemyState extends EntityState {}

@@ -32,14 +32,19 @@
       {
         "index": 4,
         "name": "EnemyBullet"
+      },
+      {
+        "index": 5,
+        "name": "Reward"
       }
     ],
     "collisionMatrix": {
       "0": 0,
       "1": 4,
       "2": 10,
-      "3": 20,
-      "4": 8
+      "3": 52,
+      "4": 8,
+      "5": 8
     }
   }
 }

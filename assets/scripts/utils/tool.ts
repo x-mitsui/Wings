@@ -1,4 +1,5 @@
-import { math } from "cc";
+import { math, _decorator, resources, JsonAsset, UITransform, Node } from "cc";
+const { ccclass, property } = _decorator;
 
 export const checkIsIn = (inBox: math.Size, outBox: math.Size, point: math.Vec3) => {
     return (
@@ -8,8 +9,6 @@ export const checkIsIn = (inBox: math.Size, outBox: math.Size, point: math.Vec3)
         point.y < outBox.height - inBox.height / 2
     );
 };
-
-import { _decorator, resources, JsonAsset } from "cc";
 
 export async function loadJSONPromise(path: string): Promise<any> {
     return new Promise((resolve, reject) => {

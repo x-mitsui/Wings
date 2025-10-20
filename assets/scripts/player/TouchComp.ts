@@ -1,18 +1,12 @@
-import { _decorator, Component, EventTouch, input, Node, Input, UITransform, math } from "cc";
-import { PlayerState } from "./PlayerState";
+import { _decorator, Component, EventTouch, input, Input, UITransform, math } from "cc";
+import { GameManager } from "../utils/GameManager";
 const { ccclass } = _decorator;
 
 @ccclass("TouchComp")
 export class TouchComp extends Component {
-    // 背景大小
-    bgContentSize: math.Size = null;
     // 主角飞机实际大小
     realSize: math.Size = null;
-    inject(player: Node) {
-        this.bgContentSize = player
-            .getComponent(PlayerState)
-            .bg.getComponent(UITransform).contentSize;
-    }
+
     protected onLoad(): void {
         const contentSize = this.node.getComponent(UITransform).contentSize;
         const scale = this.node.scale;
@@ -30,6 +24,7 @@ export class TouchComp extends Component {
 
     onTouchMove(event: EventTouch) {
         console.log("touch move");
+        const gameMgr = GameManager.getInstance();
         const delta = event.getDelta();
 
         this.node.setWorldPosition(this.node.worldPosition.add3f(delta.x, delta.y, 0));
@@ -37,9 +32,9 @@ export class TouchComp extends Component {
         if (this.node.worldPosition.x < this.realSize.width / 2) {
             this.node.setWorldPosition(this.realSize.width / 2, this.node.worldPosition.y, 0);
         }
-        if (this.node.worldPosition.x > this.bgContentSize.width - this.realSize.width / 2) {
+        if (this.node.worldPosition.x > gameMgr.bgWidth - this.realSize.width / 2) {
             this.node.setWorldPosition(
-                this.bgContentSize.width - this.realSize.width / 2,
+                gameMgr.bgWidth - this.realSize.width / 2,
                 this.node.worldPosition.y,
                 0
             );
@@ -47,10 +42,10 @@ export class TouchComp extends Component {
         if (this.node.worldPosition.y < this.realSize.height / 2) {
             this.node.setWorldPosition(this.node.worldPosition.x, this.realSize.height / 2, 0);
         }
-        if (this.node.worldPosition.y > this.bgContentSize.height - this.realSize.height / 2) {
+        if (this.node.worldPosition.y > gameMgr.bgHeight - this.realSize.height / 2) {
             this.node.setWorldPosition(
                 this.node.worldPosition.x,
-                this.bgContentSize.height - this.realSize.height / 2,
+                gameMgr.bgHeight - this.realSize.height / 2,
                 0
             );
         }

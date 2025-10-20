@@ -9,8 +9,6 @@ export class PlayerState extends Component {
     @property(Node)
     body: Node = null;
     @property(Node)
-    bg: Node = null; // 背景节点
-    @property(Node)
     playerBulletContainer: Node = null;
 
     level: PlayerLevel = PlayerLevel.Lvl0;
@@ -19,6 +17,5 @@ export class PlayerState extends Component {
 
     start() {
         this.playerBulletContainer.getComponent(PlayerBulletManager).inject(this.node);
-        this.node.getComponent(TouchComp).inject(this.node);
     }
 }
