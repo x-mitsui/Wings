@@ -18,7 +18,6 @@ const { ccclass, property } = _decorator;
 export class GameManager extends Component {
     @property(Node)
     bg: Node = null;
-    bombCount = 0;
     protected onLoad(): void {
         director.addPersistRootNode(this.node);
         GameManager._instance = this;

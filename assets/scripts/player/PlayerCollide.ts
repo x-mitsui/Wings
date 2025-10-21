@@ -83,7 +83,7 @@ export class PlayerCollide extends Component {
             }
             // 清屏炸弹
             if (rewardState.kind === 1) {
-                gameMgr.bombCount = 1;
+                playerState.bombCount += 1;
             }
         }, 0);
     }
