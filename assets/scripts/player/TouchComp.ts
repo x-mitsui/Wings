@@ -1,5 +1,5 @@
 import { _decorator, Component, EventTouch, input, Input, UITransform, math } from "cc";
-import { GameManager } from "../utils/GameManager";
+import { GameManager, GameState } from "../utils/GameManager";
 const { ccclass } = _decorator;
 
 @ccclass("TouchComp")
@@ -24,6 +24,8 @@ export class TouchComp extends Component {
 
     onTouchMove(event: EventTouch) {
         console.log("touch move");
+        if (GameManager.instance.state !== GameState.PLAYING) return;
+
         const gameMgr = GameManager.instance;
         const delta = event.getDelta();
 

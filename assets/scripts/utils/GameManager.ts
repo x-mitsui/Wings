@@ -14,12 +14,18 @@ const { ccclass, property } = _decorator;
  * 这样就免不了要先在场景编辑器中提前放置，
  * 所以_instance就不得不指向这个提前放置的实例
  */
+
+export enum GameState {
+    PLAYING,
+    PAUSED
+}
 @ccclass("GameManager")
 export class GameManager extends Component {
     @property(Node)
     bg: Node = null;
     @property(Node)
     player: Node = null;
+    _state: GameState = GameState.PLAYING;
     protected onLoad(): void {
         director.addPersistRootNode(this.node);
         GameManager._instance = this;
@@ -49,6 +55,17 @@ export class GameManager extends Component {
     }
     get bgBottomBorder() {
         return 0;
+    }
+    get state() {
+        return this._state;
+    }
+    set state(value: GameState) {
+        this._state = value;
+        if (value === GameState.PLAYING) {
+            director.resume();
+        } else {
+            director.pause();
+        }
     }
     start() {}
 

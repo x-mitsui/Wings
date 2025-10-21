@@ -29,7 +29,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 114
+      "__id__": 118
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -60,7 +60,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 115
+      "__id__": 119
     },
     "_id": "a5466d6e-9f1f-47ea-8515-71fe5cf9d121"
   },
@@ -1810,13 +1810,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 111
+        "__id__": 115
       },
       {
-        "__id__": 112
+        "__id__": 116
       },
       {
-        "__id__": 113
+        "__id__": 117
       }
     ],
     "_prefab": null,
@@ -3060,16 +3060,16 @@
         "__id__": 101
       },
       {
-        "__id__": 105
+        "__id__": 107
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 109
+        "__id__": 113
       },
       {
-        "__id__": 110
+        "__id__": 114
       }
     ],
     "_prefab": null,
@@ -3104,7 +3104,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "pauseButton",
+    "_name": "pauseBtn",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -3121,6 +3121,9 @@
       },
       {
         "__id__": 104
+      },
+      {
+        "__id__": 106
       }
     ],
     "_prefab": null,
@@ -3224,7 +3227,11 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 105
+      }
+    ],
     "_interactable": true,
     "_transition": 2,
     "_normalColor": {
@@ -3273,8 +3280,30 @@
     "_id": "12ipND5nZIj5TGvoB3w+5/"
   },
   {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 101
+    },
+    "component": "",
+    "_componentId": "fe153y76PhIVKsTg3igL7hR",
+    "handler": "onClick",
+    "customEventData": ""
+  },
+  {
+    "__type__": "fe153y76PhIVKsTg3igL7hR",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 101
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "3fy9h0+oFNa5SsYXyYKZwa"
+  },
+  {
     "__type__": "cc.Node",
-    "_name": "resumeButton",
+    "_name": "resumeBtn",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -3284,13 +3313,16 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 106
-      },
-      {
-        "__id__": 107
-      },
-      {
         "__id__": 108
+      },
+      {
+        "__id__": 109
+      },
+      {
+        "__id__": 110
+      },
+      {
+        "__id__": 112
       }
     ],
     "_prefab": null,
@@ -3329,7 +3361,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 105
+      "__id__": 107
     },
     "_enabled": true,
     "__prefab": null,
@@ -3351,7 +3383,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 105
+      "__id__": 107
     },
     "_enabled": true,
     "__prefab": null,
@@ -3390,11 +3422,15 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 105
+      "__id__": 107
     },
     "_enabled": true,
     "__prefab": null,
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 111
+      }
+    ],
     "_interactable": true,
     "_transition": 2,
     "_normalColor": {
@@ -3438,9 +3474,31 @@
     "_duration": 0.1,
     "_zoomScale": 1.2,
     "_target": {
-      "__id__": 105
+      "__id__": 107
     },
     "_id": "16OCMTd29F/rSHakS9MnEO"
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 107
+    },
+    "component": "",
+    "_componentId": "2cc6eLyX1dPebmTM2NfBbuO",
+    "handler": "onClick",
+    "customEventData": ""
+  },
+  {
+    "__type__": "2cc6eLyX1dPebmTM2NfBbuO",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 107
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "d6PE+rroRGlLMDKGYxHtIY"
   },
   {
     "__type__": "cc.UITransform",
@@ -3584,28 +3642,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 116
-    },
-    "shadows": {
-      "__id__": 117
-    },
-    "_skybox": {
-      "__id__": 118
-    },
-    "fog": {
-      "__id__": 119
-    },
-    "octree": {
       "__id__": 120
     },
-    "skin": {
+    "shadows": {
       "__id__": 121
     },
-    "lightProbeInfo": {
+    "_skybox": {
       "__id__": 122
     },
-    "postSettings": {
+    "fog": {
       "__id__": 123
+    },
+    "octree": {
+      "__id__": 124
+    },
+    "skin": {
+      "__id__": 125
+    },
+    "lightProbeInfo": {
+      "__id__": 126
+    },
+    "postSettings": {
+      "__id__": 127
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
