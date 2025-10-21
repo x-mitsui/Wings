@@ -6,16 +6,22 @@ import {
     Component,
     Contact2DType,
     director,
-    IPhysics2DContact
+    IPhysics2DContact,
+    Node
 } from "cc";
 import { PlayerState } from "./PlayerState";
 import { EnemyState } from "../enemy/EnemyState";
 import { EnemyCollide } from "../enemy/EnemyCollide";
+import { RewardState } from "../reward/RewardState";
+import { PlayerLevel } from "./bullet/types";
+import { FOREVER } from "../types";
+import { GameManager } from "../utils/GameManager";
 const { ccclass } = _decorator;
 
 @ccclass("PlayerCollide")
 export class PlayerCollide extends Component {
     collider: Collider2D = null;
+    rewardTimeIdPool = [];
     protected onLoad(): void {
         this.collider = this.getComponent(Collider2D);
     }
@@ -30,18 +36,55 @@ export class PlayerCollide extends Component {
         contact: IPhysics2DContact
     ) {
         const player = selfCollider.node;
+
+        const entity = otherCollider.node;
+        const entName = entity.name;
+        switch (true) {
+            case entName.includes("enemy"):
+                this.enemyContact(player, entity);
+                break;
+            case entName.includes("reward"):
+                this.rewardContact(player, entity);
+                break;
+        }
+    }
+
+    enemyContact(player: Node, entity: Node) {
         const playerState = player.getComponent(PlayerState);
-        const enemy = otherCollider.node;
+        const enemy = entity;
         const enemyCollide = enemy.getComponent(EnemyCollide);
         if (!player || !player.isValid || !enemy || !enemy.isValid || playerState.isHitten) return;
         playerState.isHitten = true;
-
-        if (!enemy.name.includes("enemy")) return;
 
         this.scheduleOnce(() => {
             this.takeDamageLogic(1);
 
             enemyCollide.takeDamageLogic(1);
+        }, 0);
+    }
+    rewardContact(player: Node, entity: Node) {
+        const gameMgr = GameManager.instance;
+        const playerState = player.getComponent(PlayerState);
+        const reward = entity;
+        const rewardState = reward.getComponent(RewardState);
+        if (!player || !player.isValid || !reward || !reward.isValid) return;
+        console.log("到这里");
+        this.scheduleOnce(() => {
+            reward.destroy();
+            playerState.level = PlayerLevel.Lvl1;
+            // 双枪
+            if (rewardState.kind === 0) {
+                this.rewardTimeIdPool.push(
+                    setTimeout(() => {
+                        playerState.level = PlayerLevel.Lvl0;
+                    }, rewardState.duration * 1000)
+                );
+                return;
+            }
+            // 清屏炸弹
+            if (rewardState.kind === 1) {
+                gameMgr.bombCount = 1;
+            }
         }, 0);
     }
 
@@ -90,6 +133,12 @@ export class PlayerCollide extends Component {
     protected onDestroy(): void {
         if (this.collider) {
             this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+        }
+        if (this.rewardTimeIdPool.length > 0) {
+            this.rewardTimeIdPool.forEach((id) => {
+                clearTimeout(id);
+            });
+            this.rewardTimeIdPool = [];
         }
     }
 }

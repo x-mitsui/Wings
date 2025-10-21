@@ -2,8 +2,15 @@ import { _decorator, Component, director, Node, UITransform } from "cc";
 const { ccclass, property } = _decorator;
 
 /**
+ * 参照官方单例：https://docs.cocos.com/creator/3.8/manual/zh/audio-system/audioExample.html
+ * public static get instance(): GameManager {
+ *    if (this._instance == null) {
+ *       this._instance = new GameManager(); // 新建一个实例
+ *    }
+ *    return this._instance;
+ * }
  * 游戏管理器
- * 注意：此单例模式的特殊之处：要能在UI界面配置属性，
+ * 注意：此单例模式的特殊之处：要能在UI界面配置属性，如节点bg
  * 这样就免不了要先在场景编辑器中提前放置，
  * 所以_instance就不得不指向这个提前放置的实例
  */
@@ -14,15 +21,7 @@ export class GameManager extends Component {
     bombCount = 0;
     protected onLoad(): void {
         director.addPersistRootNode(this.node);
-        // 确保唯一性：如果实例已存在，则销毁新创建的实例
-        if (GameManager._instance && GameManager._instance !== this) {
-            this.node.destroy();
-            return;
-        }
         GameManager._instance = this;
-    }
-    private constructor() {
-        super();
     }
     private static _instance: GameManager = null;
     static get instance() {

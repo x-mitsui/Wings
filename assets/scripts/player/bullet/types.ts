@@ -1,14 +1,14 @@
 import { Node } from "cc";
 
 export enum PlayerLevel {
-    Lvl0 = "Lvl0",
-    Lvl1 = "Lvl1"
+    Lvl0,
+    Lvl1
 }
 
 export enum BulletDirection {
-    UP = "UP",
-    DOWN = "DOWN",
-    OTHER = "OTHER"
+    UP,
+    DOWN,
+    OTHER
 }
 
 export type BulletConfig = {

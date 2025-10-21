@@ -12,7 +12,7 @@ enum XDirection {
 export class RewardManager extends Spawn {
     xDirection = math.randomRangeInt(0, 2) as XDirection;
     override getXDelta(entityNode: Node) {
-        const gameMgr = GameManager.getInstance();
+        const gameMgr = GameManager.instance;
 
         let xDelta = 0;
 

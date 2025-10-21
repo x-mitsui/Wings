@@ -1,5 +1,4 @@
-import { _decorator, Component, Node } from "cc";
-import { TouchComp } from "./TouchComp";
+import { _decorator, Component, Enum, Node } from "cc";
 import { PlayerLevel } from "./bullet/types";
 import { PlayerBulletManager } from "./bullet/PlayerBulletManager";
 const { ccclass, property } = _decorator;
@@ -10,7 +9,7 @@ export class PlayerState extends Component {
     body: Node = null;
     @property(Node)
     playerBulletContainer: Node = null;
-
+    @property({ type: Enum(PlayerLevel), displayName: "武器等级" })
     level: PlayerLevel = PlayerLevel.Lvl0;
     hp = 3;
     isHitten = false;

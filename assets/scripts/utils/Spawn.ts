@@ -59,7 +59,7 @@ export class Spawn extends Component {
     }
 
     getSpawnPos(entityNode: Node) {
-        const gameMgr = GameManager.getInstance();
+        const gameMgr = GameManager.instance;
         const contentSize = entityNode.getComponent(UITransform).contentSize;
         const entityPosX = math.randomRangeInt(
             contentSize.width / 2,
@@ -70,7 +70,7 @@ export class Spawn extends Component {
     }
 
     updateEntitiesPositions(deltaTime: number) {
-        const gameMgr = GameManager.getInstance();
+        const gameMgr = GameManager.instance;
         this.node.children.forEach((entityNode) => {
             const entityState = entityNode.getComponent(EntityState);
 

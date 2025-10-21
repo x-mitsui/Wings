@@ -42,7 +42,7 @@ export class PlayerBulletManager extends Component {
 
     /** NOTE: 三级属性， */
     // 主角等级
-    playerLvl = PlayerLevel.Lvl1;
+    playerLvl = PlayerLevel.Lvl0;
     // 位置节点
     posNodes: Map<string, Node> = new Map();
     // 子弹集合
@@ -97,7 +97,9 @@ export class PlayerBulletManager extends Component {
     }
     getBulletCurrentLvlConfig(): BulletCurrentLvlConfig {
         const playerLvl = this.player.getComponent(PlayerState).level;
+        console.log("playerLvl:", playerLvl, this.playerLvl);
         if (this.playerLvl === playerLvl && this.bulletCurLvlConfig) return this.bulletCurLvlConfig;
+        this.playerLvl = playerLvl;
         const rawCfg = this.bulletPlayerConfig[playerLvl];
         this.bulletCurLvlConfig = {
             ...rawCfg,
@@ -107,7 +109,7 @@ export class PlayerBulletManager extends Component {
     }
 
     updatePositions(deltaTime: number) {
-        const gameMgr = GameManager.getInstance();
+        const gameMgr = GameManager.instance;
         const cfg = this.bulletCurLvlConfig;
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];

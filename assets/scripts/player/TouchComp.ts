@@ -24,7 +24,7 @@ export class TouchComp extends Component {
 
     onTouchMove(event: EventTouch) {
         console.log("touch move");
-        const gameMgr = GameManager.getInstance();
+        const gameMgr = GameManager.instance;
         const delta = event.getDelta();
 
         this.node.setWorldPosition(this.node.worldPosition.add3f(delta.x, delta.y, 0));

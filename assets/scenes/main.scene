@@ -843,6 +843,7 @@
     "playerBulletContainer": {
       "__id__": 22
     },
+    "level": 0,
     "_id": "a12kjptsJEQrFitD/cRd3R"
   },
   {
@@ -1751,14 +1752,14 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 1,
+    "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
       "z": 0
     },
-    "_id": "74cWSqy8ZFWpizpyczus/C"
+    "_id": "caFL7D02VJyadXrXx7BhdS"
   },
   {
     "__type__": "d44e33Ru/VGx5b7Epl0gr0r",
@@ -1773,7 +1774,7 @@
     "bg": {
       "__id__": 6
     },
-    "_id": "78yJjMmppM+7QZAmDBfAyp"
+    "_id": "2ae8DYvK1CaoRwEBaKT1lk"
   },
   {
     "__type__": "cc.PrefabInfo",
