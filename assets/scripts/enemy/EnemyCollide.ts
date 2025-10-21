@@ -1,6 +1,10 @@
 import { _decorator, Animation, AnimationState, Collider2D, Component, Contact2DType } from "cc";
 import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
 import { EnemyState } from "./EnemyState";
+import { eventManager } from "../utils/EventManager";
+import { PLAYER_CHANGE_SCORE } from "../utils/Event";
+import { PlayerState } from "../player/PlayerState";
+import { GameManager } from "../utils/GameManager";
 const { ccclass } = _decorator;
 
 @ccclass("EnemyCollide")
@@ -70,6 +74,8 @@ export class EnemyCollide extends Component {
         this.node.getComponent(Collider2D).enabled = false; // 立即禁用，以免在播放动画时干扰
 
         const acName = this.node.name + "_down";
+
+        GameManager.instance.player.getComponent(PlayerState).score += state.score; // 设置玩家得分
 
         animation.on(Animation.EventType.FINISHED, this.playDownAcCallback.bind(this));
         animation.play(acName);
