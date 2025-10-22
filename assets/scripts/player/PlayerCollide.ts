@@ -125,8 +125,7 @@ export class PlayerCollide extends Component {
 
     playDownAcCallback(type: Animation.EventType, state: AnimationState) {
         if (state.name === this.node.name + "_down") {
-            console.log("game over");
-            director.pause();
+            GameManager.instance.gameOver();
         }
     }
 

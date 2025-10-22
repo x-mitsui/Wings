@@ -1,4 +1,6 @@
-import { _decorator, Component, director, Node, UITransform } from "cc";
+import { _decorator, Component, director, log, Node, sys, UITransform } from "cc";
+import { eventManager } from "./EventManager";
+import { GAME_BEST_SCORE, GAME_UPDATE_SCORE } from "./CONST";
 const { ccclass, property } = _decorator;
 
 /**
@@ -25,7 +27,11 @@ export class GameManager extends Component {
     bg: Node = null;
     @property(Node)
     player: Node = null;
-    _state: GameState = GameState.PLAYING;
+    @property(Node)
+    gameOverUI: Node = null;
+    private _bestScore = 0;
+    private _currentScore = 0;
+    private _state: GameState = GameState.PLAYING;
     protected onLoad(): void {
         director.addPersistRootNode(this.node);
         GameManager._instance = this;
@@ -33,6 +39,11 @@ export class GameManager extends Component {
     private static _instance: GameManager = null;
     static get instance() {
         return GameManager._instance;
+    }
+    bindNodes(bg: Node, player: Node, gameOverUI: Node) {
+        this.bg = bg;
+        this.player = player;
+        this.gameOverUI = gameOverUI;
     }
 
     get bgWidth() {
@@ -61,13 +72,62 @@ export class GameManager extends Component {
     }
     set state(value: GameState) {
         this._state = value;
-        if (value === GameState.PLAYING) {
-            director.resume();
-        } else {
-            director.pause();
-        }
     }
-    start() {}
+    get bestScore() {
+        return this._bestScore;
+    }
+    set bestScore(value: number) {
+        this._bestScore = value;
+    }
+    get currentScore() {
+        return this._currentScore;
+    }
+    set currentScore(value: number) {
+        this._currentScore = value;
+        eventManager.emit(GAME_UPDATE_SCORE, value);
+    }
+    gameOver() {
+        console.log("game over");
+        this.gamePause();
+        const bestScoreHistory = sys.localStorage.getItem(GAME_BEST_SCORE) || 0;
+        if (this._currentScore > bestScoreHistory) {
+            sys.localStorage.setItem(GAME_BEST_SCORE, this._currentScore + "");
+        }
+        this.gameOverUI.active = true;
+    }
+
+    gamePause() {
+        this.state = GameState.PAUSED;
+        director.pause();
+    }
+    gameResume() {
+        this.state = GameState.PLAYING;
+        director.resume();
+    }
+
+    gameQuit() {
+        this._currentScore = 0;
+        director.loadScene("start", (err) => {
+            if (err) {
+                console.error("场景start加载失败:", err);
+            } else {
+                console.log("场景start加载成功");
+                this.gameResume();
+            }
+        });
+    }
+    gameRestart() {
+        this._currentScore = 0;
+        const currentSceneName = director.getScene().name;
+        director.loadScene(currentSceneName, (err) => {
+            if (err) {
+                console.error("场景" + currentSceneName + "加载失败:", err);
+            } else {
+                console.log("场景" + currentSceneName + "加载成功");
+                this.gameResume();
+            }
+        });
+    }
 
     onDestroy() {
         if (GameManager._instance === this) {

@@ -1,6 +1,6 @@
 import { _decorator } from "cc";
 import { eventManager } from "../utils/EventManager";
-import { PLAYER_CHANGE_BOMB_COUNT } from "../utils/Event";
+import { PLAYER_CHANGE_BOMB_COUNT } from "../utils/CONST";
 import { CustomUI } from "./CustomUI";
 const { ccclass } = _decorator;
 

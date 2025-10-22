@@ -1,7 +1,7 @@
 import { _decorator } from "cc";
 import { eventManager } from "../utils/EventManager";
 import { CustomUI } from "./CustomUI";
-import { PLAYER_CHANGE_HP } from "../utils/Event";
+import { PLAYER_CHANGE_HP } from "../utils/CONST";
 const { ccclass } = _decorator;
 
 @ccclass("LifeUI")
