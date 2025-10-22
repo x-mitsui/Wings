@@ -2,7 +2,11 @@ import { _decorator, Component, Enum, Node } from "cc";
 import { PlayerLevel } from "./bullet/types";
 import { PlayerBulletManager } from "./bullet/PlayerBulletManager";
 import { eventManager } from "../utils/EventManager";
-import { PLAYER_CHANGE_BOMB_COUNT, PLAYER_CHANGE_HP } from "../utils/CONST";
+import {
+    PLAYER_RESET_BOMB_COUNTDOWN,
+    PLAYER_CHANGE_BOMB_COUNT,
+    PLAYER_CHANGE_HP
+} from "../utils/CONST";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerState")
@@ -14,7 +18,11 @@ export class PlayerState extends Component {
     @property({ type: Enum(PlayerLevel), displayName: "武器等级" })
     level: PlayerLevel = PlayerLevel.Lvl0;
     _hp = 3;
+
     _bombCount = 0;
+    @property
+    bombCD = 3;
+    _bombCountdown = 0; // bomb cd倒计时，第一次可用，所以为0
     isHitten = false;
 
     set bombCount(count: number) {
@@ -33,6 +41,17 @@ export class PlayerState extends Component {
 
     get hp() {
         return this._hp;
+    }
+
+    setBombOK() {
+        this._bombCountdown = 0;
+    }
+    isBombOk() {
+        return this._bombCountdown <= 0 && this._bombCount > 0;
+    }
+    resetBombCountdown() {
+        this._bombCountdown = this.bombCD;
+        eventManager.emit(PLAYER_RESET_BOMB_COUNTDOWN, this.bombCD);
     }
 
     start() {

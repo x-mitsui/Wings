@@ -22,7 +22,7 @@ export async function loadJSONPromise(path: string): Promise<any> {
     });
 }
 
-export const BgUtil = {
+export const BGUtil = {
     init(bg: Node) {
         this.bg = bg;
     },

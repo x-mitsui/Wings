@@ -1,6 +1,6 @@
 import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
 import { EntityState } from "./EntityState";
-import { BgUtil } from "./tool";
+import { BGUtil } from "./tool";
 const { ccclass, property } = _decorator;
 
 @ccclass("EntityConfig")
@@ -35,13 +35,13 @@ export class Spawn extends Component {
             this.timers[i] += deltaTime;
             if (this.timers[i] >= this.spawnRates[i]) {
                 this.timers[i] = 0;
-                this.spawnEnemy(this.entityConfigs[i]);
+                this.spawnEntity(this.entityConfigs[i]);
             }
             this.updateEntitiesPositions(deltaTime);
         }
     }
 
-    spawnEnemy(entityConfig: EntityConfig) {
+    spawnEntity(entityConfig: EntityConfig) {
         const entityNode = instantiate(entityConfig.prefab);
         entityNode.parent = this.node;
         entityNode.setWorldPosition(this.getSpawnPos(entityNode));
@@ -52,9 +52,9 @@ export class Spawn extends Component {
         const contentSize = entityNode.getComponent(UITransform).contentSize;
         const entityPosX = math.randomRangeInt(
             contentSize.width / 2,
-            BgUtil.bgRightBorder - contentSize.width / 2
+            BGUtil.bgRightBorder - contentSize.width / 2
         );
-        const entityPosY = BgUtil.bgTopBorder + contentSize.height / 2;
+        const entityPosY = BGUtil.bgTopBorder + contentSize.height / 2;
         return new Vec3(entityPosX, entityPosY, 0);
     }
 
@@ -70,7 +70,7 @@ export class Spawn extends Component {
 
             const contentSize = entityNode.getComponent(UITransform).contentSize;
 
-            if (entityNode.worldPosition.y < BgUtil.bgBottomBorder - contentSize.height / 2)
+            if (entityNode.worldPosition.y < BGUtil.bgBottomBorder - contentSize.height / 2)
                 entityNode.destroy();
         });
     }

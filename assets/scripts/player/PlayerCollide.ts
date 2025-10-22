@@ -3,6 +3,7 @@ import {
     Animation,
     AnimationState,
     Collider2D,
+    ColliderComponent,
     Component,
     Contact2DType,
     IPhysics2DContact,
@@ -52,15 +53,16 @@ export class PlayerCollide extends Component {
         const enemyCollide = enemy.getComponent(EnemyCollide);
         if (!player || !player.isValid || !enemy || !enemy.isValid || playerState.isHitten) return;
         playerState.isHitten = true;
-
         this.scheduleOnce(() => {
             this.takeDamageLogic(1);
 
             enemyCollide.takeDamageLogic(1);
         }, 0);
     }
+    reward: Node = null;
     rewardContact(player: Node, entity: Node) {
-        const gameMgr = GameManager.instance;
+        if (this.reward === entity) return; // 由于Box2D每个边都参与检测，所以添加标记处理
+        this.reward = entity;
         const playerState = player.getComponent(PlayerState);
         const reward = entity;
         const rewardState = reward.getComponent(RewardState);

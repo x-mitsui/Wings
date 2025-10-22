@@ -1,15 +1,15 @@
 import { _decorator, Component, find } from "cc";
-import { BgUtil } from "../utils/tool";
+import { BGUtil } from "../utils/tool";
 const { ccclass } = _decorator;
 
-@ccclass("main")
-export class main extends Component {
+@ccclass("Main")
+export class Main extends Component {
     protected onLoad(): void {
-        BgUtil.init(find("Canvas-GAME/bg/bg0"));
+        BGUtil.init(find("Canvas-GAME/bg/bg0"));
     }
 
     onDestroy(): boolean {
-        BgUtil.destroy();
+        BGUtil.destroy();
         return true;
     }
 }

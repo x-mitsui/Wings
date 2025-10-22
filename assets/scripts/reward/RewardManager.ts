@@ -1,7 +1,7 @@
 import { _decorator, math, Node, UITransform } from "cc";
 import { Spawn } from "../utils/Spawn";
 import { GameManager } from "../utils/GameManager";
-import { BgUtil } from "../utils/tool";
+import { BGUtil } from "../utils/tool";
 const { ccclass } = _decorator;
 
 // 水平方向往哪边移动
@@ -22,9 +22,9 @@ export class RewardManager extends Spawn {
         }
         const xPos = entityNode.worldPosition.x;
         const rightBound =
-            BgUtil.bgRightBorder - entityNode.getComponent(UITransform).contentSize.width / 2;
+            BGUtil.bgRightBorder - entityNode.getComponent(UITransform).contentSize.width / 2;
         const leftBound =
-            BgUtil.bgLeftBorder + entityNode.getComponent(UITransform).contentSize.width / 2;
+            BGUtil.bgLeftBorder + entityNode.getComponent(UITransform).contentSize.width / 2;
         if (xPos >= rightBound) {
             xDelta = -1;
             this.xDirection = XDirection.Left;

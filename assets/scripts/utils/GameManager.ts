@@ -1,6 +1,11 @@
-import { _decorator, Component, director, log, Node, sys, UITransform } from "cc";
+import { _decorator, Component, director, sys } from "cc";
 import { eventManager } from "./EventManager";
-import { GAME_BEST_SCORE, GAME_STATE_UPDATE, GAME_UPDATE_SCORE } from "./CONST";
+import {
+    GAME_BEST_SCORE,
+    PLAYER_RESET_BOMB_COUNTDOWN,
+    GAME_STATE_UPDATE,
+    GAME_UPDATE_SCORE
+} from "./CONST";
 const { ccclass, property } = _decorator;
 
 /**
@@ -25,6 +30,7 @@ export class GameManager extends Component {
     private _bestScore = 0;
     private _currentScore = 0;
     private _state: GameState = GameState.PLAYING;
+
     protected onLoad(): void {
         director.addPersistRootNode(this.node);
         GameManager._instance = this;
@@ -54,6 +60,7 @@ export class GameManager extends Component {
         this._currentScore = value;
         eventManager.emit(GAME_UPDATE_SCORE, value);
     }
+
     gameOver() {
         console.log("game over");
         const bestScoreHistory = sys.localStorage.getItem(GAME_BEST_SCORE) || 0;
