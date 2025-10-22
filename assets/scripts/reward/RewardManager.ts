@@ -1,6 +1,7 @@
 import { _decorator, math, Node, UITransform } from "cc";
 import { Spawn } from "../utils/Spawn";
 import { GameManager } from "../utils/GameManager";
+import { BgUtil } from "../utils/tool";
 const { ccclass } = _decorator;
 
 // 水平方向往哪边移动
@@ -12,8 +13,6 @@ enum XDirection {
 export class RewardManager extends Spawn {
     xDirection = math.randomRangeInt(0, 2) as XDirection;
     override getXDelta(entityNode: Node) {
-        const gameMgr = GameManager.instance;
-
         let xDelta = 0;
 
         if (this.xDirection === XDirection.Left) {
@@ -23,9 +22,9 @@ export class RewardManager extends Spawn {
         }
         const xPos = entityNode.worldPosition.x;
         const rightBound =
-            gameMgr.bgRightBorder - entityNode.getComponent(UITransform).contentSize.width / 2;
+            BgUtil.bgRightBorder - entityNode.getComponent(UITransform).contentSize.width / 2;
         const leftBound =
-            gameMgr.bgLeftBorder + entityNode.getComponent(UITransform).contentSize.width / 2;
+            BgUtil.bgLeftBorder + entityNode.getComponent(UITransform).contentSize.width / 2;
         if (xPos >= rightBound) {
             xDelta = -1;
             this.xDirection = XDirection.Left;

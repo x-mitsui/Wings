@@ -5,16 +5,13 @@ import {
     Collider2D,
     Component,
     Contact2DType,
-    director,
     IPhysics2DContact,
     Node
 } from "cc";
 import { PlayerState } from "./PlayerState";
-import { EnemyState } from "../enemy/EnemyState";
 import { EnemyCollide } from "../enemy/EnemyCollide";
 import { RewardState } from "../reward/RewardState";
 import { PlayerLevel } from "./bullet/types";
-import { FOREVER } from "../types";
 import { GameManager } from "../utils/GameManager";
 const { ccclass } = _decorator;
 

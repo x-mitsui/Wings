@@ -21,3 +21,35 @@ export async function loadJSONPromise(path: string): Promise<any> {
         });
     });
 }
+
+export const BgUtil = {
+    init(bg: Node) {
+        this.bg = bg;
+    },
+    destroy() {
+        this.bg = null;
+    },
+
+    get bgWidth() {
+        return this.bg.getComponent(UITransform).width;
+    },
+
+    get bgHeight() {
+        return this.bg.getComponent(UITransform).height;
+    },
+
+    get bgLeftBorder() {
+        return 0;
+    },
+
+    get bgRightBorder() {
+        return this.bgWidth;
+    },
+    get bgTopBorder() {
+        return this.bgHeight;
+    },
+
+    get bgBottomBorder() {
+        return 0;
+    }
+};

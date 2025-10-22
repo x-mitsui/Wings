@@ -1,7 +1,8 @@
 import { _decorator } from "cc";
-import { eventManager } from "../utils/EventManager";
-import { CustomUI } from "./CustomUI";
-import { PLAYER_CHANGE_HP } from "../utils/CONST";
+import { PLAYER_CHANGE_HP } from "../../utils/CONST";
+import { eventManager } from "../../utils/EventManager";
+import { CustomUI } from "../CustomUI";
+
 const { ccclass } = _decorator;
 
 @ccclass("LifeUI")

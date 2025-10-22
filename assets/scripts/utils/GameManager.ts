@@ -1,6 +1,6 @@
 import { _decorator, Component, director, log, Node, sys, UITransform } from "cc";
 import { eventManager } from "./EventManager";
-import { GAME_BEST_SCORE, GAME_UPDATE_SCORE } from "./CONST";
+import { GAME_BEST_SCORE, GAME_STATE_UPDATE, GAME_UPDATE_SCORE } from "./CONST";
 const { ccclass, property } = _decorator;
 
 /**
@@ -12,23 +12,16 @@ const { ccclass, property } = _decorator;
  *    return this._instance;
  * }
  * 游戏管理器
- * 注意：此单例模式的特殊之处：要能在UI界面配置属性，如节点bg
- * 这样就免不了要先在场景编辑器中提前放置，
- * 所以_instance就不得不指向这个提前放置的实例
+ * 注意：不要尝试往常驻节点上挂载某个场景内的元素，不然切换场景时会出现空指针
  */
 
 export enum GameState {
     PLAYING,
-    PAUSED
+    PAUSED,
+    GAMEOVER
 }
 @ccclass("GameManager")
 export class GameManager extends Component {
-    @property(Node)
-    bg: Node = null;
-    @property(Node)
-    player: Node = null;
-    @property(Node)
-    gameOverUI: Node = null;
     private _bestScore = 0;
     private _currentScore = 0;
     private _state: GameState = GameState.PLAYING;
@@ -40,38 +33,13 @@ export class GameManager extends Component {
     static get instance() {
         return GameManager._instance;
     }
-    bindNodes(bg: Node, player: Node, gameOverUI: Node) {
-        this.bg = bg;
-        this.player = player;
-        this.gameOverUI = gameOverUI;
-    }
 
-    get bgWidth() {
-        return this.bg.getComponent(UITransform).width;
-    }
-    get bgHeight() {
-        return this.bg.getComponent(UITransform).height;
-    }
-
-    get bgLeftBorder() {
-        return 0;
-    }
-
-    get bgRightBorder() {
-        return this.bgWidth;
-    }
-
-    get bgTopBorder() {
-        return this.bgHeight;
-    }
-    get bgBottomBorder() {
-        return 0;
-    }
     get state() {
         return this._state;
     }
     set state(value: GameState) {
         this._state = value;
+        eventManager.emit(GAME_STATE_UPDATE, value);
     }
     get bestScore() {
         return this._bestScore;
@@ -88,12 +56,12 @@ export class GameManager extends Component {
     }
     gameOver() {
         console.log("game over");
-        this.gamePause();
         const bestScoreHistory = sys.localStorage.getItem(GAME_BEST_SCORE) || 0;
         if (this._currentScore > bestScoreHistory) {
             sys.localStorage.setItem(GAME_BEST_SCORE, this._currentScore + "");
         }
-        this.gameOverUI.active = true;
+        this.state = GameState.GAMEOVER;
+        director.pause();
     }
 
     gamePause() {

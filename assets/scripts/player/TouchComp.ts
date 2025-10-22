@@ -1,5 +1,6 @@
 import { _decorator, Component, EventTouch, input, Input, UITransform, math } from "cc";
 import { GameManager, GameState } from "../utils/GameManager";
+import { BgUtil } from "../utils/tool";
 const { ccclass } = _decorator;
 
 @ccclass("TouchComp")
@@ -34,9 +35,9 @@ export class TouchComp extends Component {
         if (this.node.worldPosition.x < this.realSize.width / 2) {
             this.node.setWorldPosition(this.realSize.width / 2, this.node.worldPosition.y, 0);
         }
-        if (this.node.worldPosition.x > gameMgr.bgWidth - this.realSize.width / 2) {
+        if (this.node.worldPosition.x > BgUtil.bgWidth - this.realSize.width / 2) {
             this.node.setWorldPosition(
-                gameMgr.bgWidth - this.realSize.width / 2,
+                BgUtil.bgWidth - this.realSize.width / 2,
                 this.node.worldPosition.y,
                 0
             );
@@ -44,10 +45,10 @@ export class TouchComp extends Component {
         if (this.node.worldPosition.y < this.realSize.height / 2) {
             this.node.setWorldPosition(this.node.worldPosition.x, this.realSize.height / 2, 0);
         }
-        if (this.node.worldPosition.y > gameMgr.bgHeight - this.realSize.height / 2) {
+        if (this.node.worldPosition.y > BgUtil.bgHeight - this.realSize.height / 2) {
             this.node.setWorldPosition(
                 this.node.worldPosition.x,
-                gameMgr.bgHeight - this.realSize.height / 2,
+                BgUtil.bgHeight - this.realSize.height / 2,
                 0
             );
         }

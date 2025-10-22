@@ -1,10 +1,10 @@
 import { _decorator, Component, director, Label, Node, sys } from "cc";
-import { GameManager } from "../utils/GameManager";
-import { GAME_BEST_SCORE } from "../utils/CONST";
+import { GameManager } from "../../utils/GameManager";
+import { GAME_BEST_SCORE } from "../../utils/CONST";
 const { ccclass, property } = _decorator;
 
-@ccclass("gameOverUI")
-export class gameOverUI extends Component {
+@ccclass("GameOverUI")
+export class GameOverUI extends Component {
     @property(Node)
     bestScoreLabel: Node = null;
     @property(Node)

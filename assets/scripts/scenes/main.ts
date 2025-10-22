@@ -1,16 +1,15 @@
-import { _decorator, Component, Node } from "cc";
-import { GameManager } from "../utils/GameManager";
-const { ccclass, property } = _decorator;
+import { _decorator, Component, find } from "cc";
+import { BgUtil } from "../utils/tool";
+const { ccclass } = _decorator;
 
 @ccclass("main")
 export class main extends Component {
-    onLoad() {
-        GameManager.instance.bindNodes(
-            this.node.getChildByName("bg").getChildByName("bg0"),
-            this.node.getChildByName("player"),
-            this.node.getChildByName("gameOverUI")
-        );
+    protected onLoad(): void {
+        BgUtil.init(find("Canvas-GAME/bg/bg0"));
     }
 
-    update(deltaTime: number) {}
+    onDestroy(): boolean {
+        BgUtil.destroy();
+        return true;
+    }
 }

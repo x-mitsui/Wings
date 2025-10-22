@@ -10,7 +10,7 @@ import {
     SpriteFrame,
     UITransform
 } from "cc";
-import { loadJSONPromise } from "../../utils/tool";
+import { BgUtil, loadJSONPromise } from "../../utils/tool";
 import { BulletConfig, BulletCurrentLvlConfig, BulletDirection, PlayerLevel } from "./types";
 import { PlayerState } from "../PlayerState";
 import { GameManager } from "../../utils/GameManager";
@@ -109,7 +109,6 @@ export class PlayerBulletManager extends Component {
     }
 
     updatePositions(deltaTime: number) {
-        const gameMgr = GameManager.instance;
         const cfg = this.bulletCurLvlConfig;
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
@@ -121,8 +120,8 @@ export class PlayerBulletManager extends Component {
             bullet.position = bullet.position.add3f(0, y, 0);
             const wPosY = bullet.worldPosition.y;
             if (
-                wPosY > gameMgr.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
-                wPosY < gameMgr.bgBottomBorder - bullet.getComponent(UITransform).height / 2
+                wPosY > BgUtil.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
+                wPosY < BgUtil.bgBottomBorder - bullet.getComponent(UITransform).height / 2
             ) {
                 this.bullets.splice(i, 1);
                 bullet.destroy();

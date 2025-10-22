@@ -1,16 +1,6 @@
-import {
-    _decorator,
-    Component,
-    find,
-    instantiate,
-    math,
-    Node,
-    Prefab,
-    UITransform,
-    Vec3
-} from "cc";
+import { _decorator, Component, instantiate, math, Node, Prefab, UITransform, Vec3 } from "cc";
 import { EntityState } from "./EntityState";
-import { GameManager } from "./GameManager";
+import { BgUtil } from "./tool";
 const { ccclass, property } = _decorator;
 
 @ccclass("EntityConfig")
@@ -59,18 +49,16 @@ export class Spawn extends Component {
     }
 
     getSpawnPos(entityNode: Node) {
-        const gameMgr = GameManager.instance;
         const contentSize = entityNode.getComponent(UITransform).contentSize;
         const entityPosX = math.randomRangeInt(
             contentSize.width / 2,
-            gameMgr.bgRightBorder - contentSize.width / 2
+            BgUtil.bgRightBorder - contentSize.width / 2
         );
-        const entityPosY = gameMgr.bgTopBorder + contentSize.height / 2;
+        const entityPosY = BgUtil.bgTopBorder + contentSize.height / 2;
         return new Vec3(entityPosX, entityPosY, 0);
     }
 
     updateEntitiesPositions(deltaTime: number) {
-        const gameMgr = GameManager.instance;
         this.node.children.forEach((entityNode) => {
             const entityState = entityNode.getComponent(EntityState);
 
@@ -82,7 +70,7 @@ export class Spawn extends Component {
 
             const contentSize = entityNode.getComponent(UITransform).contentSize;
 
-            if (entityNode.worldPosition.y < gameMgr.bgBottomBorder - contentSize.height / 2)
+            if (entityNode.worldPosition.y < BgUtil.bgBottomBorder - contentSize.height / 2)
                 entityNode.destroy();
         });
     }
