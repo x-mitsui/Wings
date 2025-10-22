@@ -1,4 +1,4 @@
-import { _decorator, Component, director, sys } from "cc";
+import { _decorator, Component, director, log, sys } from "cc";
 import { eventManager } from "./EventManager";
 import {
     GAME_BEST_SCORE,
@@ -62,7 +62,7 @@ export class GameManager extends Component {
     }
 
     gameOver() {
-        console.log("game over");
+        log("game over");
         const bestScoreHistory = sys.localStorage.getItem(GAME_BEST_SCORE) || 0;
         if (this._currentScore > bestScoreHistory) {
             sys.localStorage.setItem(GAME_BEST_SCORE, this._currentScore + "");
@@ -86,7 +86,7 @@ export class GameManager extends Component {
             if (err) {
                 console.error("场景start加载失败:", err);
             } else {
-                console.log("场景start加载成功");
+                log("场景start加载成功");
                 this.gameResume();
             }
         });
@@ -98,7 +98,7 @@ export class GameManager extends Component {
             if (err) {
                 console.error("场景" + currentSceneName + "加载失败:", err);
             } else {
-                console.log("场景" + currentSceneName + "加载成功");
+                log("场景" + currentSceneName + "加载成功");
                 this.gameResume();
             }
         });

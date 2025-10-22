@@ -13,7 +13,7 @@ export class LifeUI extends CustomUI {
     }
 
     onChangeHp(count: number): void {
-        console.log("onChangeHp", count);
+        log("onChangeHp", count);
         this.setLabelText(count + "");
     }
 }

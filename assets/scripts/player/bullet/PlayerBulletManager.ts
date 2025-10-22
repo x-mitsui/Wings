@@ -97,7 +97,7 @@ export class PlayerBulletManager extends Component {
     }
     getBulletCurrentLvlConfig(): BulletCurrentLvlConfig {
         const playerLvl = this.player.getComponent(PlayerState).level;
-        console.log("playerLvl:", playerLvl, this.playerLvl);
+        log("playerLvl:", playerLvl, this.playerLvl);
         if (this.playerLvl === playerLvl && this.bulletCurLvlConfig) return this.bulletCurLvlConfig;
         this.playerLvl = playerLvl;
         const rawCfg = this.bulletPlayerConfig[playerLvl];

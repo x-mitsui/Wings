@@ -7,6 +7,7 @@ import {
     Component,
     Contact2DType,
     IPhysics2DContact,
+    log,
     Node
 } from "cc";
 import { PlayerState } from "./PlayerState";
@@ -67,7 +68,6 @@ export class PlayerCollide extends Component {
         const reward = entity;
         const rewardState = reward.getComponent(RewardState);
         if (!player || !player.isValid || !reward || !reward.isValid) return;
-        console.log("到这里");
         this.scheduleOnce(() => {
             reward.destroy();
             playerState.level = PlayerLevel.Lvl1;

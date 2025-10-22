@@ -36,7 +36,7 @@ export class TouchComp extends Component {
     }
 
     onTouchStart(event: EventTouch) {
-        console.log("touch start");
+        log("touch start");
         const currentTime = Date.now();
 
         // 如果是第一次点击，或者距离上次点击时间过长，重置计数器
@@ -65,7 +65,7 @@ export class TouchComp extends Component {
     }
 
     onTouchMove(event: EventTouch) {
-        console.log("touch move");
+        log("touch move");
         if (GameManager.instance.state !== GameState.PLAYING) return;
 
         const delta = event.getDelta();
@@ -102,11 +102,11 @@ export class TouchComp extends Component {
     }
 
     onTouchEnd(event: EventTouch) {
-        console.log("touch end");
+        log("touch end");
     }
 
     onTouchCancel(event: EventTouch) {
-        console.log("touch cancel");
+        log("touch cancel");
     }
 
     protected onDestroy(): void {
@@ -117,7 +117,7 @@ export class TouchComp extends Component {
     }
 
     private onDoubleClick() {
-        console.log("双击事件触发！");
+        log("双击事件触发！");
         // 在这里编写你的双击响应逻辑，例如：
         // - 放大/缩小角色或地图
         // - 快速使用道具

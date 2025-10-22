@@ -32,7 +32,7 @@ export class EnemyCollide extends Component {
         bulletState.isHitten = true; // 防止一次碰撞多次触发onBeginContact的情况
 
         const enemyName = enemyNode.name;
-        console.log("EnemyCollide onBeginContact:", enemyName);
+        log("EnemyCollide onBeginContact:", enemyName);
         if (!enemyName.includes("enemy")) return;
 
         this.scheduleOnce(() => {
