@@ -13,7 +13,8 @@ import {
 import { BGUtil, loadJSONPromise } from "../../utils/tool";
 import { BulletConfig, BulletCurrentLvlConfig, BulletDirection, PlayerLevel } from "./types";
 import { PlayerState } from "../PlayerState";
-import { GameManager } from "../../utils/GameManager";
+import { ObjectPoolManager } from "../../utils/ObjectPoolManager";
+import { OBJECT_POOL_KEY_BULLET } from "../../utils/CONST";
 const { ccclass, property } = _decorator;
 
 /**
@@ -78,7 +79,8 @@ export class PlayerBulletManager extends Component {
 
     // 根据类型生成一发子弹
     spawn(cfg: BulletCurrentLvlConfig) {
-        const bullet = instantiate(this.bulletPrefab);
+        const bullet = ObjectPoolManager.instance.get(OBJECT_POOL_KEY_BULLET);
+        if (!bullet) error("something is wrong with object pool--key:", OBJECT_POOL_KEY_BULLET);
         bullet.getComponent(Sprite).spriteFrame =
             this.bulletSkinSpriteFrames[cfg.skinSpriteFrameID];
         return bullet;
@@ -112,19 +114,19 @@ export class PlayerBulletManager extends Component {
         const cfg = this.bulletCurLvlConfig;
         for (let i = this.bullets.length - 1; i >= 0; i--) {
             const bullet = this.bullets[i];
-            if (!bullet.isValid) {
+            if (!bullet.active) {
                 this.bullets.splice(i, 1);
                 continue;
             }
             const y = (cfg.direction === BulletDirection.UP ? cfg.speed : -cfg.speed) * deltaTime;
             bullet.position = bullet.position.add3f(0, y, 0);
-            const wPosY = bullet.worldPosition.y;
+            const worldPosY = bullet.worldPosition.y;
             if (
-                wPosY > BGUtil.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
-                wPosY < BGUtil.bgBottomBorder - bullet.getComponent(UITransform).height / 2
+                worldPosY > BGUtil.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
+                worldPosY < BGUtil.bgBottomBorder - bullet.getComponent(UITransform).height / 2
             ) {
                 this.bullets.splice(i, 1);
-                bullet.destroy();
+                ObjectPoolManager.instance.put(OBJECT_POOL_KEY_BULLET, bullet);
             }
         }
     }

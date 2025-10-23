@@ -1381,6 +1381,22 @@
     },
     "_enabled": true,
     "__prefab": null,
+    "enemy0Prefab": {
+      "__uuid__": "cfa51c59-f521-4335-9bac-ed81d489925e",
+      "__expectedType__": "cc.Prefab"
+    },
+    "enemy1Prefab": {
+      "__uuid__": "a9b04b33-16b9-417e-a24a-5840860371f5",
+      "__expectedType__": "cc.Prefab"
+    },
+    "enemy2Prefab": {
+      "__uuid__": "c90e0a22-d900-468c-8d96-35ae52959474",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bulletPrefab": {
+      "__uuid__": "711f2d1f-d4d2-4284-b444-d243f75ec225",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": "dfFCJxRsxEIYBDkLDHyzA7"
   },
   {

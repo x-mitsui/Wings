@@ -1,21 +1,10 @@
 import { _decorator, Component, director, log, sys } from "cc";
 import { eventManager } from "./EventManager";
-import {
-    GAME_BEST_SCORE,
-    PLAYER_RESET_BOMB_COUNTDOWN,
-    GAME_STATE_UPDATE,
-    GAME_UPDATE_SCORE
-} from "./CONST";
-const { ccclass, property } = _decorator;
+import { GAME_BEST_SCORE, GAME_STATE_UPDATE, GAME_UPDATE_SCORE } from "./CONST";
+const { ccclass } = _decorator;
 
 /**
  * 参照官方单例：https://docs.cocos.com/creator/3.8/manual/zh/audio-system/audioExample.html
- * public static get instance(): GameManager {
- *    if (this._instance == null) {
- *       this._instance = new GameManager(); // 新建一个实例
- *    }
- *    return this._instance;
- * }
  * 游戏管理器
  * 注意：不要尝试往常驻节点上挂载某个场景内的元素，不然切换场景时会出现空指针
  */

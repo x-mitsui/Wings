@@ -10,6 +10,8 @@ import {
 import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
 import { EnemyState } from "./EnemyState";
 import { GameManager } from "../utils/GameManager";
+import { OBJECT_POOL_KEY_BULLET } from "../utils/CONST";
+import { ObjectPoolManager } from "../utils/ObjectPoolManager";
 const { ccclass } = _decorator;
 
 @ccclass("EnemyCollide")
@@ -44,8 +46,9 @@ export class EnemyCollide extends Component {
         if (!enemyName.includes("enemy")) return;
 
         this.scheduleOnce(() => {
-            bulletNode.destroy();
             this.takeDamageLogic(1);
+            bulletState.isHitten = false; // 重置状态再回收
+            ObjectPoolManager.instance.put(OBJECT_POOL_KEY_BULLET, bulletNode); // 子弹回收
         }, 0);
     }
 
