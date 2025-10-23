@@ -1,4 +1,4 @@
-import { _decorator } from "cc";
+import { _decorator, log } from "cc";
 import { PLAYER_CHANGE_HP } from "../../utils/CONST";
 import { eventManager } from "../../utils/EventManager";
 import { CustomUI } from "../CustomUI";

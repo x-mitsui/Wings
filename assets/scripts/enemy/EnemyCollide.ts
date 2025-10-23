@@ -1,4 +1,12 @@
-import { _decorator, Animation, AnimationState, Collider2D, Component, Contact2DType } from "cc";
+import {
+    _decorator,
+    Animation,
+    AnimationState,
+    Collider2D,
+    Component,
+    Contact2DType,
+    log
+} from "cc";
 import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
 import { EnemyState } from "./EnemyState";
 import { GameManager } from "../utils/GameManager";

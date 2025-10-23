@@ -2,7 +2,7 @@ import {
     _decorator,
     Component,
     error,
-    find,
+    log,
     instantiate,
     Node,
     Prefab,
