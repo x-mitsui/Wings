@@ -1,4 +1,4 @@
-import { math, _decorator, resources, JsonAsset, UITransform, Node } from "cc";
+import { math, _decorator, resources, JsonAsset, UITransform, Node, Asset } from "cc";
 const { ccclass, property } = _decorator;
 
 export const checkIsIn = (inBox: math.Size, outBox: math.Size, point: math.Vec3) => {
@@ -10,16 +10,20 @@ export const checkIsIn = (inBox: math.Size, outBox: math.Size, point: math.Vec3)
     );
 };
 
-export async function loadJSONPromise(path: string): Promise<any> {
+export async function loadAssetPromise<T extends Asset>(path: string): Promise<T> {
     return new Promise((resolve, reject) => {
-        resources.load(path, JsonAsset, (err, jsonAsset) => {
+        resources.load(path, (err, asset: T) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(jsonAsset.json);
+                resolve(asset);
             }
         });
     });
+}
+
+export async function loadAssetsPromise<T extends Asset>(paths: string[]): Promise<T[]> {
+    return Promise.all(paths.map((path) => loadAssetPromise<T>(path)));
 }
 
 export const BGUtil = {

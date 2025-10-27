@@ -1,7 +1,7 @@
 import { _decorator, Component, log } from "cc";
 import { GAME_STATE_UPDATE } from "../utils/CONST";
-import { GameState } from "../utils/GameManager";
-import { eventManager } from "../utils/EventManager";
+import { GameState } from "../mgr/GameManager";
+import { eventManager } from "../mgr/EventManager";
 const { ccclass } = _decorator;
 
 @ccclass("CanvasUI")

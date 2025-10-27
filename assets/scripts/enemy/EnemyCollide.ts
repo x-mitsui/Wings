@@ -7,11 +7,13 @@ import {
     Contact2DType,
     log
 } from "cc";
-import { PlayerBulletState } from "../player/bullet/PlayerBulletState";
-import { EnemyState } from "./EnemyState";
-import { GameManager } from "../utils/GameManager";
-import { OBJECT_POOL_KEY_BULLET } from "../utils/CONST";
-import { ObjectPoolManager } from "../utils/ObjectPoolManager";
+import { GameManager } from "../mgr/GameManager";
+import { ObjectPoolManager } from "../mgr/ObjectPoolManager";
+import { EnemyState as EnemyState } from "./types";
+import { PlayerBulletState } from "../player/types";
+import { OBJECT_POOL_KEY_PREFIX } from "../utils/CONST";
+import { Entity } from "../utils/Entity";
+import { AudioManager } from "../mgr/AudioManager";
 const { ccclass } = _decorator;
 
 @ccclass("EnemyCollide")
@@ -36,8 +38,10 @@ export class EnemyCollide extends Component {
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: any) {
         const enemyNode = selfCollider.node;
         const bulletNode = otherCollider.node;
-
-        const bulletState = bulletNode.getComponent(PlayerBulletState);
+        if (bulletNode.name.includes("player")) return;
+        log("success111", bulletNode);
+        const bulletState = bulletNode.getComponent(Entity<PlayerBulletState>).state;
+        log("success222");
         if (!bulletNode || !bulletNode.isValid || !bulletState || bulletState.isHitten) return;
         bulletState.isHitten = true; // 防止一次碰撞多次触发onBeginContact的情况
 
@@ -48,7 +52,7 @@ export class EnemyCollide extends Component {
         this.scheduleOnce(() => {
             this.takeDamageLogic(1);
             bulletState.isHitten = false; // 重置状态再回收
-            ObjectPoolManager.instance.put(OBJECT_POOL_KEY_BULLET, bulletNode); // 子弹回收
+            ObjectPoolManager.inst.put(bulletState.objPoolKey, bulletNode); // 子弹回收
         }, 0);
     }
 
@@ -60,7 +64,7 @@ export class EnemyCollide extends Component {
 
     // 执行掉血逻辑
     takeDamageLogic(hp: number) {
-        const state = this.node.getComponent(EnemyState);
+        const state = this.node.getComponent(Entity<EnemyState>).state;
         state.hp -= hp;
         if (state.hp > 0) {
             this.playHitAc();
@@ -77,19 +81,26 @@ export class EnemyCollide extends Component {
 
     playDownAc() {
         const animation = this.node.getComponent(Animation);
-        const state = this.node.getComponent(EnemyState);
-        state.speed = 0;
+        const state = this.node.getComponent(Entity<EnemyState>).state;
+        state.ySpeed = 0;
         this.node.getComponent(Collider2D).enabled = false; // 立即禁用，以免在播放动画时干扰
 
         const acName = this.node.name + "_down";
 
-        GameManager.instance.currentScore += state.score;
+        GameManager.inst.currentScore += state.score;
 
         animation.on(Animation.EventType.FINISHED, this.playDownAcCallback.bind(this));
         animation.play(acName);
     }
 
     playDownAcCallback(type: Animation.EventType, state: AnimationState) {
-        if (state.name === this.node.name + "_down") this.node.destroy();
+        if (state.name === this.node.name + "_down") {
+            AudioManager.inst.playOneShot(`sounds/${this.node.name}_down`);
+            log("敌人死亡:", OBJECT_POOL_KEY_PREFIX + this.node.name.toUpperCase());
+            ObjectPoolManager.inst.put(
+                OBJECT_POOL_KEY_PREFIX + this.node.name.toUpperCase(),
+                this.node
+            );
+        }
     }
 }

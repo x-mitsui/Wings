@@ -10,8 +10,9 @@ import {
     UITransform,
     math
 } from "cc";
-import { GameManager, GameState } from "../utils/GameManager";
+import { GameManager, GameState } from "../mgr/GameManager";
 import { BGUtil } from "../utils/tool";
+import { AudioManager } from "../mgr/AudioManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("TouchComp")
@@ -66,7 +67,7 @@ export class TouchComp extends Component {
 
     onTouchMove(event: EventTouch) {
         log("touch move");
-        if (GameManager.instance.state !== GameState.PLAYING) return;
+        if (GameManager.inst.state !== GameState.PLAYING) return;
 
         const delta = event.getDelta();
         const playerSize = this.player.getComponent(UITransform);
@@ -122,9 +123,10 @@ export class TouchComp extends Component {
         // - 放大/缩小角色或地图
         // - 快速使用道具
         // - 打开特定菜单
+        AudioManager.inst.playOneShot("sounds/use_bomb");
         const customData = 666;
         this.dbClickCustomEventHandlers.forEach((eventHandler: EventHandler) => {
-            // callback接受参数会将ui界面的customEventData和customData糅合到一块
+            // *callback接受参数会将ui界面的customEventData和customData糅合到一块
             eventHandler.emit([customData]);
         });
     }

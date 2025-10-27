@@ -1,5 +1,5 @@
 import { _decorator, Node, Sprite, tween } from "cc";
-import { eventManager } from "../../utils/EventManager";
+import { eventManager } from "../../mgr/EventManager";
 import { PLAYER_RESET_BOMB_COUNTDOWN, PLAYER_CHANGE_BOMB_COUNT } from "../../utils/CONST";
 import { CustomUI } from "../CustomUI";
 import { PlayerState } from "../../player/PlayerState";

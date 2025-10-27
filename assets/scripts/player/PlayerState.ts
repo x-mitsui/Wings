@@ -1,12 +1,13 @@
 import { _decorator, Component, Enum, Node } from "cc";
-import { PlayerLevel } from "./bullet/types";
-import { PlayerBulletManager } from "./bullet/PlayerBulletManager";
-import { eventManager } from "../utils/EventManager";
+import { PlayerLevel } from "./types";
+import { eventManager } from "../mgr/EventManager";
 import {
     PLAYER_RESET_BOMB_COUNTDOWN,
     PLAYER_CHANGE_BOMB_COUNT,
-    PLAYER_CHANGE_HP
+    PLAYER_CHANGE_HP,
+    PLAYER_CHANGE_LEVEL
 } from "../utils/CONST";
+import { PlayerBulletController } from "./PlayerBulletController";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerState")
@@ -16,7 +17,7 @@ export class PlayerState extends Component {
     @property(Node)
     playerBulletContainer: Node = null;
     @property({ type: Enum(PlayerLevel), displayName: "武器等级" })
-    level: PlayerLevel = PlayerLevel.Lvl0;
+    _level: PlayerLevel = PlayerLevel.Lvl0;
     _hp = 3;
 
     _bombCount = 0;
@@ -43,6 +44,14 @@ export class PlayerState extends Component {
         return this._hp;
     }
 
+    get level() {
+        return this._level;
+    }
+    set level(level: PlayerLevel) {
+        this._level = level;
+        eventManager.emit(PLAYER_CHANGE_LEVEL, level);
+    }
+
     setBombOK() {
         this._bombCountdown = 0;
     }
@@ -56,6 +65,6 @@ export class PlayerState extends Component {
 
     start() {
         this.hp = 3; // 触发一次lifeUI更新
-        this.playerBulletContainer.getComponent(PlayerBulletManager).inject(this.node);
+        this.playerBulletContainer.getComponent(PlayerBulletController).inject(this.node);
     }
 }

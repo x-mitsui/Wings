@@ -1,6 +1,8 @@
-import { _decorator, Component, director, Label, Node, sys } from "cc";
-import { GameManager } from "../../utils/GameManager";
+import { _decorator, Component, Label, Node, sys } from "cc";
+import { GameManager } from "../../mgr/GameManager";
 import { GAME_BEST_SCORE } from "../../utils/CONST";
+import { ObjectPoolManager } from "../../mgr/ObjectPoolManager";
+import { AudioManager } from "../../mgr/AudioManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameOverUI")
@@ -14,12 +16,13 @@ export class GameOverUI extends Component {
     @property(Node)
     quitButton: Node = null;
     onEnable() {
+        AudioManager.inst.playOneShot("sounds/game_over");
         const localBestScore = sys.localStorage.getItem(GAME_BEST_SCORE) || 0;
         if (localBestScore) {
             this.bestScoreLabel.getComponent(Label).string = localBestScore;
         }
 
-        const currentScore = GameManager.instance.currentScore;
+        const currentScore = GameManager.inst.currentScore;
         this.currentScoreLabel.getComponent(Label).string = currentScore + "";
     }
     protected onLoad(): void {
@@ -28,10 +31,13 @@ export class GameOverUI extends Component {
     }
 
     onClickRestart() {
+        AudioManager.inst.playOneShot("sounds/button");
         this.node.active = false;
-        GameManager.instance.gameRestart();
+        GameManager.inst.gameRestart();
     }
     onClickQuit() {
-        GameManager.instance.gameQuit();
+        AudioManager.inst.playOneShot("sounds/button");
+        ObjectPoolManager.inst.clearAll();
+        GameManager.inst.gameQuit();
     }
 }

@@ -1,7 +1,7 @@
 import { _decorator } from "cc";
 import { CustomUI } from "../CustomUI";
 import { GAME_UPDATE_SCORE } from "../../utils/CONST";
-import { eventManager } from "../../utils/EventManager";
+import { eventManager } from "../../mgr/EventManager";
 const { ccclass } = _decorator;
 
 @ccclass("ScoreUI")

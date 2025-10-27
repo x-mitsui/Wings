@@ -1,0 +1,20 @@
+[
+    {
+        "id": 0,
+        "type": "bullet",
+        "direction": 0,
+        "posNodeNames": ["Player_Lv0_Bullet_Pos_0"],
+        "ySpeed": 1500,
+        "skinSpriteFrameID": 0,
+        "objPoolKey": "OBJECT_POOL_KEY_BULLET0"
+    },
+    {
+        "id": 1,
+        "type": "bullet",
+        "direction": 0,
+        "posNodeNames": ["Player_Lv1_Bullet_Pos_0", "Player_Lv1_Bullet_Pos_1"],
+        "ySpeed": 1200,
+        "skinSpriteFrameID": 1,
+        "objPoolKey": "OBJECT_POOL_KEY_BULLET1"
+    }
+]

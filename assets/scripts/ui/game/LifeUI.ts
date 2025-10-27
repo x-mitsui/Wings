@@ -1,6 +1,6 @@
 import { _decorator, log } from "cc";
 import { PLAYER_CHANGE_HP } from "../../utils/CONST";
-import { eventManager } from "../../utils/EventManager";
+import { eventManager } from "../../mgr/EventManager";
 import { CustomUI } from "../CustomUI";
 
 const { ccclass } = _decorator;

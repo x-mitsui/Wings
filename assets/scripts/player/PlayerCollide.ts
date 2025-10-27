@@ -3,7 +3,6 @@ import {
     Animation,
     AnimationState,
     Collider2D,
-    ColliderComponent,
     Component,
     Contact2DType,
     IPhysics2DContact,
@@ -12,15 +11,18 @@ import {
 } from "cc";
 import { PlayerState } from "./PlayerState";
 import { EnemyCollide } from "../enemy/EnemyCollide";
-import { RewardState } from "../reward/RewardState";
-import { PlayerLevel } from "./bullet/types";
-import { GameManager } from "../utils/GameManager";
+import { GameManager } from "../mgr/GameManager";
+import { ObjectPoolManager } from "../mgr/ObjectPoolManager";
+import { OBJECT_POOL_KEY_PREFIX } from "../utils/CONST";
+import { RewardData } from "../reward/types";
+import { PlayerLevel } from "./types";
+import { Entity } from "../utils/Entity";
+import { AudioManager } from "../mgr/AudioManager";
 const { ccclass } = _decorator;
 
 @ccclass("PlayerCollide")
 export class PlayerCollide extends Component {
     collider: Collider2D = null;
-    rewardTimeIdPool = [];
     protected onLoad(): void {
         this.collider = this.getComponent(Collider2D);
     }
@@ -52,7 +54,7 @@ export class PlayerCollide extends Component {
         const playerState = player.getComponent(PlayerState);
         const enemy = entity;
         const enemyCollide = enemy.getComponent(EnemyCollide);
-        if (!player || !player.isValid || !enemy || !enemy.isValid || playerState.isHitten) return;
+        if (!player || !player.isValid || !enemy || !enemy.active || playerState.isHitten) return;
         playerState.isHitten = true;
         this.scheduleOnce(() => {
             this.takeDamageLogic(1);
@@ -65,23 +67,26 @@ export class PlayerCollide extends Component {
         if (this.reward === entity) return; // 由于Box2D每个边都参与检测，所以添加标记处理
         this.reward = entity;
         const playerState = player.getComponent(PlayerState);
-        const reward = entity;
-        const rewardState = reward.getComponent(RewardState);
-        if (!player || !player.isValid || !reward || !reward.isValid) return;
+        const rewardState = this.reward.getComponent(Entity<RewardData>).state;
+        if (!player || !player.isValid || !this.reward || !this.reward.active) return;
         this.scheduleOnce(() => {
-            reward.destroy();
-            playerState.level = PlayerLevel.Lvl1;
+            ObjectPoolManager.inst.put(
+                OBJECT_POOL_KEY_PREFIX + this.reward.name.toUpperCase(),
+                this.reward
+            );
+            log("rewardState.id-->", rewardState.id, rewardState.duration);
             // 双枪
-            if (rewardState.kind === 0) {
-                this.rewardTimeIdPool.push(
-                    setTimeout(() => {
-                        playerState.level = PlayerLevel.Lvl0;
-                    }, rewardState.duration * 1000)
-                );
+            if (rewardState.id === 0) {
+                AudioManager.inst.playOneShot("sounds/get_double_laser");
+                playerState.level = PlayerLevel.Lvl1;
+                this.scheduleOnce(() => {
+                    playerState.level = PlayerLevel.Lvl0; // 延迟执行
+                }, rewardState.duration);
                 return;
             }
             // 清屏炸弹
-            if (rewardState.kind === 1) {
+            if (rewardState.id === 1) {
+                AudioManager.inst.playOneShot("sounds/get_bomb");
                 playerState.bombCount += 1;
             }
         }, 0);
@@ -124,7 +129,7 @@ export class PlayerCollide extends Component {
 
     playDownAcCallback(type: Animation.EventType, state: AnimationState) {
         if (state.name === this.node.name + "_down") {
-            GameManager.instance.gameOver();
+            GameManager.inst.gameOver();
         }
     }
 
@@ -132,11 +137,6 @@ export class PlayerCollide extends Component {
         if (this.collider) {
             this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         }
-        if (this.rewardTimeIdPool.length > 0) {
-            this.rewardTimeIdPool.forEach((id) => {
-                clearTimeout(id);
-            });
-            this.rewardTimeIdPool = [];
-        }
+        this.unscheduleAllCallbacks();
     }
 }
