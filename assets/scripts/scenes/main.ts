@@ -1,7 +1,7 @@
 import { _decorator, Component, find, log, screen, view } from "cc";
 import { BGUtil, printSizes } from "../utils/tool";
 import { AudioManager } from "../mgr/AudioManager";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass("Main")
 export class Main extends Component {
