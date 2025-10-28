@@ -99,8 +99,8 @@ export class PlayerBulletController extends Component {
             bullet.position = bullet.position.add3f(0, y, 0);
             const worldPosY = bullet.worldPosition.y;
             if (
-                worldPosY > BGUtil.bgTopBorder + bullet.getComponent(UITransform).height / 2 ||
-                worldPosY < BGUtil.bgBottomBorder - bullet.getComponent(UITransform).height / 2
+                worldPosY > BGUtil.topBorder + bullet.getComponent(UITransform).height / 2 ||
+                worldPosY < BGUtil.bottomBorder - bullet.getComponent(UITransform).height / 2
             ) {
                 this.bullets.splice(i, 1);
                 ObjectPoolManager.inst.put(bulletState.objPoolKey, bullet);

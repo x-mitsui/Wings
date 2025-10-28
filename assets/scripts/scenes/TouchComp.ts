@@ -93,10 +93,10 @@ export class TouchComp extends Component {
         if (this.player.worldPosition.y < playerRealSize.height / 2) {
             this.player.setWorldPosition(this.player.worldPosition.x, playerRealSize.height / 2, 0);
         }
-        if (this.player.worldPosition.y > BGUtil.bgHeight - playerRealSize.height / 2) {
+        if (this.player.worldPosition.y > BGUtil.topBorder - playerRealSize.height / 2) {
             this.player.setWorldPosition(
                 this.player.worldPosition.x,
-                BGUtil.bgHeight - playerRealSize.height / 2,
+                BGUtil.topBorder - playerRealSize.height / 2,
                 0
             );
         }

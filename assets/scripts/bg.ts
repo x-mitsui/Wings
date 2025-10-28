@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Sprite, UITransform } from "cc";
+import { _decorator, Component, Node, UITransform } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("bg")
@@ -9,6 +9,9 @@ export class bg extends Component {
     bg1: Node = null;
     height = null;
     start() {
+        // 背景适配原则：
+        // 1. 前提-竖屏游戏fitWidth
+        // 2. 找到所有目标设备中高宽比最大的那个，然后根据这个宽高比和设计分辨率的高宽比做对比，通过printSizes观察可视区域和画布的高度的差值，补齐背景图片的高度
         this.bg0 = this.node.getChildByName("bg0");
         this.bg1 = this.node.getChildByName("bg1");
         this.height = this.bg0.getComponent(UITransform).contentSize.height;

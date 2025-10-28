@@ -62,7 +62,7 @@ export abstract class EntityController extends Component {
             contentSize.width / 2,
             BGUtil.bgRightBorder - contentSize.width / 2
         );
-        const entityPosY = BGUtil.bgTopBorder + contentSize.height / 2;
+        const entityPosY = BGUtil.topBorder + contentSize.height / 2;
         return new Vec3(entityPosX, entityPosY, 0);
     }
 
@@ -78,7 +78,7 @@ export abstract class EntityController extends Component {
 
             const contentSize = entityNode.getComponent(UITransform).contentSize;
 
-            if (entityNode.worldPosition.y < BGUtil.bgBottomBorder - contentSize.height / 2) {
+            if (entityNode.worldPosition.y < BGUtil.bottomBorder - contentSize.height / 2) {
                 log(
                     "敌人超出底部边界，回收到对象池:",
                     OBJECT_POOL_KEY_PREFIX + entityNode.name.toUpperCase()
