@@ -82,6 +82,7 @@ export class AudioManager {
                 } else {
                     this._audioSource.stop();
                     this._audioSource.clip = clip;
+                    this._audioSource.loop = loop;
                     this._audioSource.play();
                     this.audioSource.volume = volume;
                 }
